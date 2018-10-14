@@ -35,3 +35,22 @@ searchProduct = () => {
         }
     }
 }
+
+/* Open modal to add a product */
+const modal = document.getElementById("addProductModal");
+const modalBtn = document.getElementById("addProduct");
+const span = document.getElementsByClassName("close")[0];
+// Open modal when user clicks modal button
+modalBtn.onclick = () => {
+    modal.style.display = "block";
+}
+// Close modal when user clicks "x"
+span.onclick = () => {
+    modal.style.display = "none";
+}
+// Close modal if the user clicks outside it
+window.onclick = (event) => {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
