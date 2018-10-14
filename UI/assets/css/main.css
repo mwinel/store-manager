@@ -184,7 +184,7 @@ label {
 
 .column {
     flex: 50%;
-    padding: 20px 0px;
+    padding: 10px 0px;
 }
 
 .dropdown-btn {
@@ -305,4 +305,42 @@ tr:nth-child(even) {
 
 .table-bottom {
     font-weight: 600;
+}
+
+.report-cards {
+    border: 1px solid #dddddd;
+    padding: 20px;
+    border-radius: 4px;
+    background: #ffffff;
+    font-family: helvetica;
+    margin-right: 20px;
+}
+
+.report-cards h3 {
+    margin: 0;
+}
+
+.report-cards h2 {
+    font-size: 40px;
+    margin: 0;
+}
+
+.report-cards-text {
+    font-size: 13px;
+    color: #555555;
+}
+
+.report-cards-number {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.report-cards-link a {
+    font-size: 12px;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.report-cards-link a:hover {
+    text-decoration: underline;
 }
