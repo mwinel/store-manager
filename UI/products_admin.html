@@ -50,6 +50,10 @@
                             <i class="fa fa-plus-square" aria-hidden="true">
                             </i>&nbsp; Add Product
                         </a>
+                        <a href="#" id="addAttendant">
+                            <i class="fa fa-user-plus" aria-hidden="true">
+                            </i>&nbsp; Add Attendant
+                        </a>
                     </div>
                 </div>
             </div>
@@ -202,6 +206,24 @@
             </div>
         </div>
     </div>
+
+    <!-- Add Attendant Modal -->
+    <div class="container">
+        <div class="modal" id="addAttendantModal">
+            <div class="modal-content">
+                <span class="cancel">&times;</span>
+                <div class="add-attendant">
+                    <h2>Add a shop attendant</h2>
+                    <form action="#">
+                        <input type="text" placeholder="Enter email address" required>
+                        <textarea name="textarea">Message...</textarea>
+                        <button type="submit" class="btn-add-attendant">Send Invite</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Javascript -->
     <script src="assets/js/main.js"></script>
 </body>
