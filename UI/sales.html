@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Products | Store Manager</title>
+    <title>Sales Records | Store Manager</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Custom stylesheet -->
     <link rel="stylesheet" type="text/css" media="screen" href="assets/css/main.css" />
@@ -28,7 +28,7 @@
     </div>
     <div class="container">
         <div class="page-title">
-            <h1>Products</h1>
+            <h1>Sales Records</h1>
         </div>
         <div class="row">
             <div class="column">
@@ -38,11 +38,11 @@
                         <i class="fa fa-caret-down"></i>
                     </button>
                     <div class="dropdown-content" id="myDropdown">
-                        <a href="#">
+                        <a href="products.html">
                             <i class="fa fa-tags fa-rotate-90" aria-hidden="true">
                             </i>&nbsp; Products
                         </a>
-                        <a href="sales.html">
+                        <a href="#">
                             <i class="fa fa-shopping-basket" aria-hidden="true">
                             </i>&nbsp; Sales
                         </a>
@@ -56,83 +56,60 @@
         <div class="products">
             <table id="allProducts">
                 <tr>
+                    <th>Sale ID</th>
                     <th>Product</th>
-                    <th>Inventory</th>
+                    <th>Quantity</th>
                     <th>Category</th>
                     <th>Price</th>
-                    <th></th>
                 </tr>
                 <tr>
+                    <td><a href="#">SM1234</a></td>
                     <td><a href="#">Cinnabari Wooden Sunglasses</a></td>
-                    <td>50</td>
+                    <td>2</td>
                     <td>Sunglasses</td>
-                    <td>$200</td>
-                    <td>
-                        <button class="btn-add-cart">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                            <span class="tooltip-text">Add to cart</span>
-                        </button>
-                    </td>
+                    <td>$400</td>
                 </tr>
                 <tr>
+                    <td><a href="#">SM1233</a></td>
                     <td><a href="#">Cinnabari Retro-Wooden Sunglasses</a></td>
-                    <td>50</td>
+                    <td>3</td>
                     <td>Sunglasses</td>
-                    <td>$210</td>
-                    <td>
-                        <button class="btn-add-cart">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                            <span class="tooltip-text">Add to cart</span>
-                        </button>
-                    </td>
+                    <td>$630</td>
                 </tr>
                 <tr>
+                    <td><a href="#">SM1232</a></td>
                     <td><a href="#">Honor smart watch</a></td>
-                    <td>15</td>
+                    <td>1</td>
                     <td>Watches</td>
                     <td>$21</td>
-                    <td>
-                        <button class="btn-add-cart">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                            <span class="tooltip-text">Add to cart</span>
-                        </button>
-                    </td>
                 </tr>
                 <tr>
+                    <td><a href="#">SM1231</a></td>
                     <td><a href="#">Xiaomi Mi8</a></td>
-                    <td>10</td>
+                    <td>1</td>
                     <td>Mobile Phones</td>
                     <td>$469</td>
-                    <td>
-                        <button class="btn-add-cart">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                            <span class="tooltip-text">Add to cart</span>
-                        </button>
-                    </td>
                 </tr>
                 <tr>
+                    <td><a href="#">SM1230</a></td>
                     <td><a href="#">Xiaomi Mi6</a></td>
-                    <td>10</td>
+                    <td>1</td>
                     <td>Mobile Phones</td>
                     <td>$269</td>
-                    <td>
-                        <button class="btn-add-cart">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                            <span class="tooltip-text">Add to cart</span>
-                        </button>
-                    </td>
                 </tr>
                 <tr>
+                    <td><a href="#">SM1229</a></td>
                     <td><a href="#">Honor Heartbeat Smart Watch</a></td>
-                    <td>17</td>
+                    <td>2</td>
                     <td>Smart Watches</td>
-                    <td>$26</td>
-                    <td>
-                        <button class="btn-add-cart">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                            <span class="tooltip-text">Add to cart</span>
-                        </button>
-                    </td>
+                    <td>$52</td>
+                </tr>
+                <tr>
+                    <td class="table-bottom">Total Sales</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="table-bottom">$1841</td>
                 </tr>
             </table>
         </div>
