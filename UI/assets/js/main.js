@@ -38,10 +38,10 @@ searchProduct = () => {
 
 /* Open modal to add a product */
 const modal = document.getElementById("addProductModal");
-const modalBtn = document.getElementById("addProduct");
+const modalBtnProduct = document.getElementById("addProduct");
 const span = document.getElementsByClassName("close")[0];
 // Open modal when user clicks modal button
-modalBtn.onclick = () => {
+modalBtnProduct.onclick = () => {
     modal.style.display = "block";
 }
 // Close modal when user clicks "x"
@@ -52,5 +52,22 @@ span.onclick = () => {
 window.onclick = (event) => {
     if (event.target == modal) {
         modal.style.display = "none";
+    }
+}
+
+/* Open modal to add an attendant */
+const modalAttendant = document.getElementById("addAttendantModal");
+const modalBtnAttendant = document.getElementById("addAttendant");
+const spanAttendant = document.getElementsByClassName("cancel")[0];
+
+modalBtnAttendant.onclick = () => {
+    modalAttendant.style.display = "block";
+}
+spanAttendant.onclick = () => {
+    modalAttendant.style.display = "none";
+}
+window.onclick = (e) => {
+    if (e.target == modalAttendant) {
+        modalAttendant.style.display = "none";
     }
 }

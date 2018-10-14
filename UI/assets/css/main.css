@@ -418,15 +418,16 @@ tr:nth-child(even) {
     width: 50%;
 }
 
-.close {
+.close, .cancel {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
 
-.close:hover, .close:focus {
-    color: black;
+.close:hover, .close:focus,
+.cancel:hover, .cancel:focus {
+    color: #cc0000;
     text-decoration: none;
     cursor: pointer;
 }
@@ -442,5 +443,19 @@ tr:nth-child(even) {
 }
 
 .btn-add-product:hover {
+    opacity: 0.8;
+}
+
+.btn-add-attendant {
+    padding: 12px 15px;
+    background:#5563c1;
+    border-radius: 3px;
+    border: 1px solid #3f4eae;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-add-attendant:hover {
     opacity: 0.8;
 }
