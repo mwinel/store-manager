@@ -459,3 +459,15 @@ tr:nth-child(even) {
 .btn-add-attendant:hover {
     opacity: 0.8;
 }
+
+.item {
+    margin-top: 40px;
+}
+
+.product {
+    padding: 20px;
+    border: 1px solid #dddddd;
+    font-family: helvetica;
+    background: #ffffff;
+    border-radius: 3px;
+}
