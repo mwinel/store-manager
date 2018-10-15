@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Products | Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Custom stylesheet -->
+    <link rel="stylesheet" type="text/css" media="screen" href="assets/css/main.css" />
+    <!-- Fonts for this app -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700" rel="stylesheet">
+    <!-- Font awesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="nav">
+        <div class="container">
+            <div class="logo">
+                <a href="#">Store Manager</a>
+            </div>
+            <label for="toggle">&#9776;</label>
+            <input type="checkbox" id="toggle"/>
+            <div class="menu">
+                <a href="#">@admin</a>
+                <a href="login.html">Logout</a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="item">
+            <div class="page-title">
+                <h1>Cinnabari Wooden Sunglasses</h1>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <div class="dropdown">
+                        <button onclick="myActions()" class="dropdown-btn">
+                            More actions...&nbsp; 
+                            <i class="fa fa-caret-down"></i>
+                        </button>
+                        <div class="dropdown-content" id="myDropdown">
+                            <a href="#">
+                                <i class="fa fa-edit fa-rotate-90" aria-hidden="true">
+                                </i>&nbsp; Edit this product
+                            </a>
+                            <a href="sales_admin.html">
+                                <i class="fa fa-times" aria-hidden="true">
+                                </i>&nbsp; Delete this product
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                </div>
+            </div>
+            <div class="product">
+                <h3>Desecription</h3>
+                <p>
+                    Our classic Artisan wooden sunglasses are 100% handcrafted from charcoalwood. 
+                    The exotic wood grain of charcoalwood exudes sophistication and the polarized lens reduces glare and protects the eyes. 
+                    This is a part of our exotic wood collection and is available in limited quantities. 
+                </p>
+                <hr>
+                <h3>Price</h3>
+                <p>$200</p>
+                <h3>Category</h3>
+                <p>Sunglasses</p>
+                <h3>Inventory</h3>
+                <p>50</p>
+            </div>
+        </div>
+    <!-- Javascript -->
+    <script src="assets/js/main.js"></script>
+</body>
+</html>
