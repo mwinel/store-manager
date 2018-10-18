@@ -1,0 +1,15 @@
+# Add coverage configurations
+[report]
+
+# Exclude from consideration
+exclude_lines = 
+    pragma: no cover
+
+    # Don't complain if tests do not hit defensive assertion code:
+    raise AssertionError
+    raise NotImplementError
+    raise IndexError
+
+    # Don't complain if non runnable code is not run:
+    if 0:
+    if __name__ == __main__.:
