@@ -16,7 +16,7 @@ class RequestError:
         Returns a formatted 404 NOT FOUND error message.
         """
         return jsonify({"error": RequestError.message['error_message'].format(
-            "The requested URL was not found on the server",
+            "404 Not Found: The requested URL was not found on the server",
             request.url
         )}), 404
 
@@ -25,7 +25,8 @@ class RequestError:
         Returns a formatted 405 METHOD NOT ALLOWED message.
         """
         return jsonify({"error": RequestError.message['error_message'].format(
-            error, request.url
+            "405 Method Not Allowed for the requested URL",
+            request.url
         )}), 405
 
     def internal_server_error(error):
