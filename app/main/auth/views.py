@@ -1,8 +1,9 @@
 import re
 from flask import request, jsonify
 from app.main.auth import api
-from app.main.auth.user import (create_store_attendant, create_store_owner,
-                                get_all_users, get_user_by_username)
+from app.main.auth.attendant import create_store_attendant
+from app.main.auth.admin import create_store_owner
+from app.main.auth.user import get_all_users, get_user_by_username
 
 
 @api.route("/signup", methods=['POST'])
