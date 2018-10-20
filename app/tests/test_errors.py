@@ -16,7 +16,3 @@ class TestRequestError(BaseTestCase):
     def test_method_not_allowed_error(self):
         """Test method not allowed error response."""
         self.assertTrue(self.request_error.method_not_allowed())
-
-    def test_internal_server_error(self):
-        """Test internal server error response."""
-        self.assertTrue(self.request_error.internal_server_error())

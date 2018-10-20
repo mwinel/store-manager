@@ -25,14 +25,5 @@ class RequestError:
         Returns a formatted 405 METHOD NOT ALLOWED message.
         """
         return jsonify({"error": RequestError.message['error_message'].format(
-            "405 Method Not Allowed for the requested URL",
-            request.url
-        )}), 405
-
-    def internal_server_error(error):
-        """
-        Returns a formatted 500 INTERNAL SERVER ERROR message.
-        """
-        return jsonify({"error": RequestError.message['error_message'].format(
             error, request.url
-        )}), 500
+        )}), 405
