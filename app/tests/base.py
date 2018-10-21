@@ -1,7 +1,7 @@
 import unittest
 from manage import app
 from app.main.errors.request_errors import RequestError
-from app.models import User, Owner
+from app.models import User, Owner, Product
 
 
 class BaseTestCase(unittest.TestCase):
@@ -12,6 +12,8 @@ class BaseTestCase(unittest.TestCase):
         self.request_error = RequestError()
         self.attendant = User("nelson", "nelson@example.com", "123456")
         self.owner = Owner("murungi", "murungi@example.com", "654321")
+        self.product = Product("Tecno W3", "Tecno smart phone", "2", "$150",
+                               "Mobile Phones")
 
         # Dummy attendants
         self.attendant1 = {
@@ -49,6 +51,23 @@ class BaseTestCase(unittest.TestCase):
             "username": "john",
             "email": "john@example.com",
             "password": "1234"
+        }
+
+        # Dummy products
+        self.product1 = {
+            "name": "Tecno W3",
+            "description": "Mobile Smart Phone",
+            "quantity": "3",
+            "price": "$200",
+            "category": "Mobile Phones"
+        }
+
+        self.product2 = {
+            "name": " ",
+            "description": "LCD 32 inch television",
+            "quantity": "3",
+            "price": "$600",
+            "category": "Televisions"
         }
 
     def tearDown(self):
