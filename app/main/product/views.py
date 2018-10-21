@@ -1,6 +1,7 @@
 from flask import jsonify, request
 from app.main.product import api
-from app.main.product.products import create_product, get_product_by_name
+from app.main.product.products import (create_product, get_product_by_name,
+                                       get_all_products)
 from app.main.auth.admin import is_admin
 from app.main.auth.views import auth
 
@@ -23,3 +24,9 @@ def add_product():
     if already_exists:
         return jsonify({"message": "Product already exists."}), 400
     return create_product(name, description, quantity, price, category)
+
+
+@api.route("/products", methods=['GET'])
+@auth.login_required
+def get_products():
+    return get_all_products(), 200

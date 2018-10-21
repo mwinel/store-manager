@@ -17,6 +17,13 @@ def create_product(name, description, quantity, price, category):
     }), 201
 
 
+def get_all_products():
+    """
+    This method returns a list of all products.
+    """
+    return jsonify(Products=[i.serialize for i in products])
+
+
 def get_product_by_name(name):
     """
     This method checks for a product given its title.

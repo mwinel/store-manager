@@ -73,3 +73,13 @@ class TestProductCase(BaseTestCase):
                             content_type='application/json')
         self.assertTrue(res.status_code, 400)
         b"Fields cannot be left empty." in res.data
+
+    def test_get_all_products(self):
+        rv = self.app.post("/api/v1/products",
+                           data=json.dumps(self.product2),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 201)
+        res = self.app.get("/api/v1/products",
+                           data=json.dumps(self.product2),
+                           content_type='application/json')
+        self.assertTrue(res.status_code, 200)
