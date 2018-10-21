@@ -1,3 +1,6 @@
+import datetime
+
+
 # Define class User.
 class User:
     """
@@ -39,3 +42,39 @@ class Owner(User):
     def __init__(self, username, email, password):
         User.__init__(self, username, email, password)
         self.admin = True
+
+
+# Define class Product
+class Product:
+    """
+    This class defines the product in terms of its
+    id, name, description, quantity, price, category
+    and date.
+    """
+
+    product_id = 1
+
+    def __init__(self, name, description, quantity, price, category):
+        self.name = name
+        self.description = description
+        self.quantity = quantity
+        self.price = price
+        self.category = category
+        self.date = datetime.datetime.utcnow()
+        self.id = Product.product_id
+        Product.product_id += 1
+
+    @property
+    def serialize(self):
+        """
+        Returns product data in JSON serializable format.
+        """
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "quantity": self.quantity,
+            "price": self.price,
+            "category": self.category,
+            "added on": self.date
+        }

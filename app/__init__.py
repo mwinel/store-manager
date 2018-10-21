@@ -15,11 +15,14 @@ def create_app(config_class):
     app.errorhandler(404)(RequestError.not_found)
     app.errorhandler(405)(RequestError.method_not_allowed)
 
-    # Register blueprint
+    # Register blueprints
     from app.main.index import api as index_blueprint
     app.register_blueprint(index_blueprint, url_prefix='/api/v1')
 
     from app.main.auth import api as auth_blueprint
     app.register_blueprint(auth_blueprint, url_prefix='/api/v1/auth')
+
+    from app.main.product import api as product_blueprint
+    app.register_blueprint(product_blueprint, url_prefix='/api/v1')
 
     return app

@@ -1,1 +1,2 @@
 users = list()
+products = list()
