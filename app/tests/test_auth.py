@@ -41,6 +41,41 @@ class TestAdminAuth(BaseTestCase):
         self.assertTrue(rv.status_code, 400)
         b"Password too short." in rv.data
 
+    def test_store_owner_login(self):
+        """Test API can login a store owner."""
+        rv = self.app.post("/api/v1/auth/admin/signup",
+                           data=json.dumps(self.owner1),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 201)
+        res = self.app.post("/api/v1/auth/admin/login",
+                            data=json.dumps(self.owner1),
+                            content_type='application/json')
+        self.assertTrue(res.status_code, 200)
+        b"Successfully logged in." in res.data
+
+    def test_store_owner_login_invalid_credentials(self):
+        """Test API can not login store owner with invalid credentials."""
+        rv = self.app.post("/api/v1/auth/admin/signup",
+                           data=json.dumps(self.owner1),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 201)
+        res = self.app.post("/api/v1/auth/admin/login",
+                            data=json.dumps({
+                                "username": "paulo",
+                                "password": "654321"
+                            }),
+                            content_type='application/json')
+        self.assertTrue(res.status_code, 400)
+        b"Invalid credentials." in res.data
+
+    def test_login_for_non_registered_store_owner(self):
+        """Test API can not login a non registered store owner."""
+        rv = self.app.post("/api/v1/auth/admin/login",
+                           data=json.dumps(self.owner1),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 400)
+        b"User does not exist." in rv.data
+
 
 class TestAttendantAuth(BaseTestCase):
     """This class tests the attendant auth endpoints."""
@@ -80,3 +115,38 @@ class TestAttendantAuth(BaseTestCase):
                            content_type='application/json')
         self.assertTrue(rv.status_code, 400)
         b"Password too short." in rv.data
+
+    def test_store_attendant_login(self):
+        """Test API can login a store attendant."""
+        rv = self.app.post("/api/v1/auth/signup",
+                           data=json.dumps(self.attendant1),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 201)
+        res = self.app.post("/api/v1/auth/login",
+                            data=json.dumps(self.attendant1),
+                            content_type='application/json')
+        self.assertTrue(res.status_code, 200)
+        b"Successfully logged in." in res.data
+
+    def test_store_attendant_login_invalid_credentials(self):
+        """Test API can not login store attendant with invalid credentials."""
+        rv = self.app.post("/api/v1/auth/signup",
+                           data=json.dumps(self.attendant1),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 201)
+        res = self.app.post("/api/v1/auth/login",
+                            data=json.dumps({
+                                "username": "paulo",
+                                "password": "654321"
+                            }),
+                            content_type='application/json')
+        self.assertTrue(res.status_code, 400)
+        b"Invalid credentials." in res.data
+
+    def test_login_for_non_registered_store_attendant(self):
+        """Test API can not login a non registered store attendant."""
+        rv = self.app.post("/api/v1/auth/login",
+                           data=json.dumps(self.attendant1),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 400)
+        b"User does not exist." in rv.data

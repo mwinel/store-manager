@@ -1,9 +1,28 @@
 import re
-from flask import request, jsonify
+from flask import g, request, jsonify
+from flask_httpauth import HTTPBasicAuth
 from app.main.auth import api
 from app.main.auth.attendant import create_store_attendant
 from app.main.auth.admin import create_store_owner
 from app.main.auth.user import get_all_users, get_user_by_username
+from app.db import users
+
+
+auth = HTTPBasicAuth()
+
+
+@auth.verify_password
+def verify_password(username, password):
+    user = get_user_by_username(username)
+    if not user:
+        return False
+    g.user = user
+    return True
+
+
+@auth.error_handler
+def auth_error():
+    return jsonify({"error": "Unauthorized Access!"}), 401
 
 
 @api.route("/signup", methods=['POST'])
@@ -46,6 +65,21 @@ def admin_signup():
     return create_store_owner(username, email, password)
 
 
+@api.route("/login", methods=['POST'])
+@api.route("/admin/login", methods=['POST'])
+def login():
+    username = request.json.get('username')
+    password = request.json.get('password')
+    current_user = get_user_by_username(username)
+    if not current_user:
+        return jsonify({"message": "User does not exist."}), 404
+    for user in users:
+        if username == user.username and password == user.password:
+            return jsonify({"message": "Successfully logged in."}), 200
+        return jsonify({"message": "Invalid credentials."}), 400
+
+
 @api.route("/users", methods=['GET'])
+@auth.login_required
 def get_users():
     return get_all_users(), 200
