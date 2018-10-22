@@ -33,3 +33,10 @@ def get_product_by_name(name):
     for product in products:
         if product.name == name:
             return True
+
+
+def get_product_by_id(id):
+    """
+    This method checks for a product given its id.
+    """
+    return jsonify(Product=[i.serialize for i in products if i.id == id])

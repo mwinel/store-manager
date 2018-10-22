@@ -1,7 +1,7 @@
 from flask import jsonify, request
 from app.main.product import api
 from app.main.product.products import (create_product, get_product_by_name,
-                                       get_all_products)
+                                       get_all_products, get_product_by_id)
 from app.main.auth.admin import is_admin
 from app.main.auth.views import auth
 
@@ -30,3 +30,12 @@ def add_product():
 @auth.login_required
 def get_products():
     return get_all_products(), 200
+
+
+@api.route("/products/<int:id>", methods=['GET'])
+@auth.login_required
+def get_a_product(id):
+    product = get_product_by_id(id)
+    if not product:
+        return jsonify({"message": "Product does not exist."}), 404
+    return product, 200

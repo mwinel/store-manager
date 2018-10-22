@@ -75,11 +75,23 @@ class TestProductCase(BaseTestCase):
         b"Fields cannot be left empty." in res.data
 
     def test_get_all_products(self):
+        """Test API can fetch all products."""
         rv = self.app.post("/api/v1/products",
                            data=json.dumps(self.product2),
                            content_type='application/json')
         self.assertTrue(rv.status_code, 201)
         res = self.app.get("/api/v1/products",
                            data=json.dumps(self.product2),
+                           content_type='application/json')
+        self.assertTrue(res.status_code, 200)
+
+    def test_get_a_single_product(self):
+        """Test API can fetch a single product."""
+        rv = self.app.post("/api/v1/products",
+                           data=json.dumps(self.product1),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 201)
+        res = self.app.get("/api/v1/products/1",
+                           data=json.dumps(self.product1),
                            content_type='application/json')
         self.assertTrue(res.status_code, 200)
