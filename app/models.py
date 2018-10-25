@@ -78,3 +78,37 @@ class Product:
             "category": self.category,
             "added on": self.date
         }
+
+    def total_cost(self, quantity, price):
+        return quantity * price
+
+
+# Define sales class
+class Sale:
+    """
+    This class defines a sales class.
+    """
+
+    sale_id = 1
+
+    def __init__(self, name, quantity, price):
+        self.name = name
+        self.quantity = quantity
+        self.price = price
+        self.date = datetime.datetime.utcnow()
+        self.id = Sale.sale_id
+        Sale.sale_id += 1
+
+    @property
+    def serialize(self):
+        """
+        Returns a sale order data in JSON serializable format.
+        """
+        return {
+            "id": self.id,
+            "name": self.name,
+            "price": self.price,
+            "quantity": self.quantity,
+            "total cost": self.quantity * self.price,
+            "sold on": self.date
+        }
