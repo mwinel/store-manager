@@ -2,6 +2,7 @@ from flask import jsonify, request
 from app.main.sale import api
 from app.main.sale.sales import create_sales
 from app.db import products
+from app.main.auth.views import auth
 
 
 @api.route("/sales", methods=['POST'])
