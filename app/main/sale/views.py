@@ -1,6 +1,7 @@
 from flask import jsonify, request
 from app.main.sale import api
-from app.main.sale.sales import create_sales, get_all_sales
+from app.main.sale.sales import (create_sales, get_all_sales,
+                                 get_sale_by_id)
 from app.main.auth.views import auth
 from app.main.auth.admin import is_admin
 from app.db import products
@@ -26,3 +27,11 @@ def get_sale_orders():
     if is_admin() is not True:
         return jsonify({"message": "Unauthorized Access!"}), 401
     return get_all_sales(), 200
+
+
+@api.route("/sales/<int:id>", methods=['GET'])
+@auth.login_required
+def get_sale(id):
+    if is_admin() is not True:
+        return jsonify({"message": "Unauthorized Access!"}), 401
+    return get_sale_by_id(id)
