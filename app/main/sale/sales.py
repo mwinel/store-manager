@@ -13,3 +13,10 @@ def create_sales(name, quantity, price):
     return jsonify({
         "message": "Sale order successfully added."
     }), 201
+
+
+def get_all_sales():
+    """
+    This method returns a list of sales.
+    """
+    return jsonify(Sales=[i.serialize for i in sales])
