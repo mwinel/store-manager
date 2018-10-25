@@ -63,3 +63,26 @@ class TestSaleCase(BaseTestCase):
                            data=json.dumps(self.sale1),
                            content_type='application/json')
         self.assertTrue(res.status_code, 200)
+
+    def test_get_a_single_sale(self):
+        """Test API can fetch a single sale."""
+        rv = self.app.post("/api/v1/sale",
+                           data=json.dumps(self.sale1),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 201)
+        res = self.app.get("/api/v1/sales/1",
+                           data=json.dumps(self.sale1),
+                           content_type='application/json')
+        self.assertTrue(res.status_code, 200)
+
+    def test_get_a_non_existing_sale_order(self):
+        """Test API can fetch a single sale."""
+        rv = self.app.post("/api/v1/sales",
+                           data=json.dumps(self.sale1),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 201)
+        res = self.app.get("/api/v1/sales/1",
+                           data=json.dumps(self.sale2),
+                           content_type='application/json')
+        self.assertTrue(res.status_code, 404)
+        b"Sale order does not exist." in res.data
