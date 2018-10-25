@@ -5,6 +5,7 @@ from app.db import products
 
 
 @api.route("/sales", methods=['POST'])
+@auth.login_required
 def add_sale():
     name = request.json.get('name')
     quantity = int(request.json.get('quantity'))
