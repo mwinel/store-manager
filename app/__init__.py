@@ -25,4 +25,7 @@ def create_app(config_class):
     from app.main.product import api as product_blueprint
     app.register_blueprint(product_blueprint, url_prefix='/api/v1')
 
+    from app.main.sale import api as sales_blueprint
+    app.register_blueprint(sales_blueprint, url_prefix='/api/v1')
+
     return app
