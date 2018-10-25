@@ -75,6 +75,7 @@ class TestProductCase(BaseTestCase):
         b"Fields cannot be left empty." in res.data
 
     def test_get_all_products(self):
+        """Test API can fetch all products."""
         rv = self.app.post("/api/v1/products",
                            data=json.dumps(self.product2),
                            content_type='application/json')
