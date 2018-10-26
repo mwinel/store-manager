@@ -1,4 +1,5 @@
 from flask import jsonify, request
+from flasgger import swag_from
 from app.main.sale import api
 from app.main.sale.sales import (create_sales, get_all_sales,
                                  get_sale_by_id)
@@ -9,6 +10,7 @@ from app.db import products
 
 @api.route("/sales", methods=['POST'])
 @auth.login_required
+@swag_from('../apidocs/add_sale.yml')
 def add_sale():
     name = request.json.get('name')
     quantity = int(request.json.get('quantity'))
@@ -23,6 +25,7 @@ def add_sale():
 
 @api.route("/sales", methods=['GET'])
 @auth.login_required
+@swag_from('../apidocs/get_sales.yml')
 def get_sale_orders():
     if is_admin() is not True:
         return jsonify({"message": "Unauthorized Access!"}), 401
@@ -31,6 +34,7 @@ def get_sale_orders():
 
 @api.route("/sales/<int:id>", methods=['GET'])
 @auth.login_required
+@swag_from('../apidocs/get_sale.yml')
 def get_sale(id):
     if is_admin() is not True:
         return jsonify({"message": "Unauthorized Access!"}), 401

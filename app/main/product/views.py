@@ -1,4 +1,5 @@
 from flask import jsonify, request
+from flasgger import swag_from
 from app.main.product import api
 from app.main.product.products import (create_product, get_product_by_name,
                                        get_all_products, get_product_by_id)
@@ -8,6 +9,7 @@ from app.main.auth.views import auth
 
 @api.route("/products", methods=['POST'])
 @auth.login_required
+@swag_from('../apidocs/add_product.yml')
 def add_product():
     name = request.json.get('name')
     description = request.json.get('description')
@@ -28,11 +30,13 @@ def add_product():
 
 @api.route("/products", methods=['GET'])
 @auth.login_required
+@swag_from('../apidocs/get_products.yml')
 def get_products():
     return get_all_products(), 200
 
 
 @api.route("/products/<int:id>", methods=['GET'])
 @auth.login_required
+@swag_from('../apidocs/get_product.yml')
 def get_product(id):
     return get_product_by_id(id)

@@ -1,0 +1,35 @@
+API endpoint to fetch a sale order
+---
+tags:
+  - Sale
+description: Return a single sale order from the database
+parameters: 
+  - in: path
+    name: id
+    required: true
+    description: The unique id of the sale order
+    schema:
+      type: integer
+responses:
+  200:
+    description: Success
+    content:
+      application/json:
+        schema:
+          type: array
+          properties:
+            id:
+              type: integer
+            title:
+              type: string
+            body:
+              type: string
+  404:
+    description: Sale order does not exist.
+    schema: 
+      type: object
+      properties:
+        "message":
+          type: string
+          enum:
+            - "Sale order does not exist."

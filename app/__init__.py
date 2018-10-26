@@ -1,4 +1,5 @@
 from flask import Flask
+from flasgger import Swagger, swag_from
 from app.config import app_config
 from app.main.errors.request_errors import RequestError
 
@@ -10,6 +11,12 @@ def create_app(config_class):
     """
     app = Flask(__name__)
     app.config.from_object(app_config[config_class])
+    app.config['SWAGGER'] = {
+        'title': 'Store Manager API',
+        'universion': 3
+    }
+
+    swagger = Swagger(app)
 
     # Request Exceptions
     app.errorhandler(404)(RequestError.not_found)
