@@ -1,0 +1,33 @@
+API endpoint to login a user.
+---
+tags:
+  - User
+parameters:
+  - name: user
+    description: Logs in a user
+    type: string
+    in: path
+    required: true
+  - name: body
+    description: A json object with admin parameters
+    in: body
+    required: true
+    schema:
+      type: object
+      required:
+        - "body"
+      properties:
+        body:
+          type: "string"
+          example: "All you have to do is pass in the instance variable"
+responses:
+  201:
+    description: Logs in a user
+    schema: 
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - "Successfully logged in"
+            
