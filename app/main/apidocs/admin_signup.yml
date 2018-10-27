@@ -1,0 +1,49 @@
+API endpoint to sign up Admin or store owner
+---
+tags:
+  - User
+parameters:
+  - name: username
+    description: Admin Username
+    type: string
+    in: path
+    required: true
+  - name: email
+    description: Admin Email address
+    type: string
+    in: path
+    required: true
+  - name: password
+    description: Admin Password
+    type: string
+    in: path
+    required: true
+  - name: body
+    description: A json object with admin parameters
+    in: body
+    required: true
+    schema:
+      type: object
+      required:
+        - "body"
+      properties:
+        username:
+          type: "string"
+          example: "murungi"
+        email:
+          type: "string"
+          example: "murungi@gmail.com"
+        password:
+          type: "string"
+          example: "654321"
+responses:
+  201:
+    description: Account successfuly created
+    schema: 
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - "account successfully created"
+            

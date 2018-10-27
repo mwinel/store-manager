@@ -1,6 +1,7 @@
 import re
 from flask import g, request, jsonify
 from flask_httpauth import HTTPBasicAuth
+from flasgger import swag_from
 from app.main.auth import api
 from app.main.auth.attendant import create_store_attendant
 from app.main.auth.admin import create_store_owner
@@ -26,6 +27,7 @@ def auth_error():
 
 
 @api.route("/signup", methods=['POST'])
+@swag_from('../apidocs/attendant_signup.yml')
 def user_signup():
     username = request.json.get('username')
     email = request.json.get('email')
@@ -46,6 +48,7 @@ def user_signup():
 
 
 @api.route("/admin/signup", methods=['POST'])
+@swag_from('../apidocs/admin_signup.yml')
 def admin_signup():
     username = request.json.get('username')
     email = request.json.get('email')
@@ -67,6 +70,7 @@ def admin_signup():
 
 @api.route("/login", methods=['POST'])
 @api.route("/admin/login", methods=['POST'])
+@swag_from('../apidocs/user_login.yml')
 def login():
     username = request.json.get('username')
     password = request.json.get('password')

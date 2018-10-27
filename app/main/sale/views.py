@@ -1,0 +1,41 @@
+from flask import jsonify, request
+from flasgger import swag_from
+from app.main.sale import api
+from app.main.sale.sales import (create_sales, get_all_sales,
+                                 get_sale_by_id)
+from app.main.auth.views import auth
+from app.main.auth.admin import is_admin
+from app.db import products
+
+
+@api.route("/sales", methods=['POST'])
+@auth.login_required
+@swag_from('../apidocs/add_sale.yml')
+def add_sale():
+    name = request.json.get('name')
+    quantity = int(request.json.get('quantity'))
+    price = int(request.json.get('price'))
+    if name == "":
+        return jsonify({"message": "Fields cannot be left empty."}), 400
+    product = [i for i in products if i.name == name]
+    if not product:
+        return jsonify({"message": "Product does not exist."}), 404
+    return create_sales(name, quantity, price)
+
+
+@api.route("/sales", methods=['GET'])
+@auth.login_required
+@swag_from('../apidocs/get_sales.yml')
+def get_sale_orders():
+    if is_admin() is not True:
+        return jsonify({"message": "Unauthorized Access!"}), 401
+    return get_all_sales(), 200
+
+
+@api.route("/sales/<int:id>", methods=['GET'])
+@auth.login_required
+@swag_from('../apidocs/get_sale.yml')
+def get_sale(id):
+    if is_admin() is not True:
+        return jsonify({"message": "Unauthorized Access!"}), 401
+    return get_sale_by_id(id)

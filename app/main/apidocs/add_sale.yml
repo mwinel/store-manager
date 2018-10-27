@@ -1,0 +1,48 @@
+API endpoint to add a sale order
+---
+tags:
+  - Sale
+parameters:
+  - name: name
+    description: The name of the product
+    type: string
+    in: path
+    required: true
+  - name: quantity
+    description: Product quantity
+    type: string
+    in: path
+    required: true
+  - name: price
+    description: Product price
+    type: string
+    in: path
+    required: true
+  - name: body
+    description: A json object with sale order parameters
+    in: body
+    required: true
+    schema:
+      type: object
+      required:
+        - "body"
+      properties:
+        name:
+          type: "string"
+          example: "Tecno W3"
+        quantity:
+          type: "string"
+          example: "1"
+        price:
+          type: "string"
+          example: "299"
+responses:
+  201:
+    description: Sale order successfully added.
+    schema: 
+      type: object
+      properties:
+        message:
+          type: string
+          enum:
+            - "Sale order successfully added."
