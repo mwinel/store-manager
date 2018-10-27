@@ -5,8 +5,7 @@ from app.db import sales
 
 def create_sales(name, quantity, price):
     """
-    This method creates a new sale.
-    returns: a success message.
+    Method to create a new sale.
     """
     sale_order = Sale(name=name, quantity=quantity, price=price)
     sales.append(sale_order)
@@ -24,8 +23,7 @@ def get_all_sales():
 
 def get_sale_by_id(id):
     """
-    This method checks for a sale order given its id.
-    returns: sale order
+    Checks for a sale order given its id.
     """
     sale = [i.serialize for i in sales if i.id == id]
     if not sale:

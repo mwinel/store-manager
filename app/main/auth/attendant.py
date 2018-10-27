@@ -5,9 +5,7 @@ from app.db import users
 
 def create_store_attendant(username, email, password):
     """
-    This method creates a new store attendant.
-    parameters: username, email, password.
-    returns: a success message.
+    Create store attendant.
     """
     attendant = User(username=username, email=email, password=password)
     users.append(attendant)
