@@ -7,7 +7,9 @@ This application helps store owners avoid selling products that have run out of 
 
 Clone the repo from GitHub:
 
+```
 https://github.com/mwinel/store-manager.git
+```
 
 Create and activate virtualenv
 
@@ -33,6 +35,8 @@ Run unit tests
 ```
 python3 manage.py tests
 ```
+
+### Sample request
 
 Index;
 ```
