@@ -25,7 +25,7 @@ def get_sale_by_id(id):
     """
     Checks for a sale order given its id.
     """
-    sale = [i.serialize for i in sales if i.id == id]
+    sale = [sale.serialize for sale in sales if sale.id == id]
     if not sale:
         return jsonify({"message": "Sale order does not exist."}), 404
     return jsonify(Sale=sale), 200

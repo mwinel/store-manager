@@ -40,7 +40,7 @@ def get_product_by_id(id):
     This method checks for a product given its id.
     returns: product
     """
-    product = [i.serialize for i in products if i.id == id]
+    product = [product.serialize for product in products if product.id == id]
     if not product:
         return jsonify({"message": "Product does not exist."}), 404
     return jsonify(Product=product), 200
