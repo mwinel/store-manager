@@ -16,7 +16,7 @@ class BaseTestCase(unittest.TestCase):
         self.sale = Sale("Sony LED TV", "2", "299")
 
         # Dummy attendants
-        self.admin = {
+        self.admin1 = {
             "username": "sally",
             "email": "sally@example.com",
             "password": "123456",

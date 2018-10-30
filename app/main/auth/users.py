@@ -4,7 +4,7 @@ from app.db import Database
 
 db = Database()
 
-def create_store_owner(user_id, username, email, password, admin):
+def create_user(user_id, username, email, password, admin):
     """
     Creates a new store owner.
     """
@@ -25,4 +25,10 @@ def get_user_by_username(username):
     This method checks for a user given the username.
     """
     user = db.get_by_argument('users', 'username', username)
+    return user
+
+def check_user_password(password):
+    """
+    This method checks for the given password of a user."""
+    user = db.get_by_argument('users', 'password', password)
     return user

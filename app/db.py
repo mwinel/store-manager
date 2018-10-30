@@ -8,10 +8,10 @@ class Database:
     def __init__(self):
         """Initialize database connection."""
         self.connection = psycopg2.connect(
-            database="store_manager", user="murungi", 
-            password="myPassword", port="5432")
+            database="store_manager", port="5432")
         self.connection.autocommit = True
         self.cursor = self.connection.cursor()
+        print("connected yessssssss")
 
     def create_tables(self):
         """Creates all database tables."""
@@ -27,8 +27,8 @@ class Database:
             user_id, username, email, password, admin)
         self.cursor.execute(user_query)
 
-
     def fetch_users(self):
+        """Fetch all users."""
         self.cursor.execute("SELECT * FROM users")
         rows = self.cursor.fetchall()
         users = []
@@ -44,6 +44,7 @@ class Database:
         return users
 
     def get_by_argument(self, table, column, argument):
+        """Return a query by argument."""
         query = "SELECT * FROM {} WHERE {} = '{}';".format(
             table, column, argument)
         self.cursor.execute(query)
