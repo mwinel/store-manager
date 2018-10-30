@@ -10,7 +10,7 @@ class BaseTestCase(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
         self.request_error = RequestError()
-        self.admin = User("nelson", "nelson@example.com", "123456", True)
+        self.admin = User("1", "nelson", "nelson@example.com", "123456", True)
         self.product = Product("Tecno W3", "Tecno smart phone", "2", "$150",
                                "Mobile Phones")
         self.sale = Sale("Sony LED TV", "2", "299")
