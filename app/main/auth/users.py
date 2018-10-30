@@ -4,10 +4,15 @@ from app.db import Database
 
 db = Database()
 
-def create_user(user_id, username, email, password, admin):
+def create_user(*args):
     """
     Creates a new store owner.
     """
+    user_id = args[0]
+    username = args[1]
+    email = args[2]
+    password = args[3]
+    admin = args[4]
     user = User(user_id=user_id, username=username, email=email,
                 password=password, admin=admin)
     db.insert_user_data(user_id, username, email, password, admin)

@@ -20,8 +20,13 @@ class Database:
         email VARCHAR(20), password VARCHAR(20), admin BOOLEAN DEFAULT FALSE);"
         self.cursor.execute(create_user_table)
 
-    def insert_user_data(self, user_id, username, email, password, admin):
+    def insert_user_data(self, *args):
         """Insert user data into the database."""
+        user_id = args[0]
+        username = args[1]
+        email = args[2]
+        password = args[3]
+        admin = args[4]
         user_query = "INSERT INTO users (user_id, username, email, password, admin)\
         VALUES ('{}', '{}', '{}', '{}', '{}');".format(
             user_id, username, email, password, admin)
