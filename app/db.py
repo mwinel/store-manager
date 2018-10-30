@@ -16,14 +16,15 @@ class Database:
     def create_tables(self):
         """Creates all database tables."""
         create_user_table = "CREATE TABLE IF NOT EXISTS users\
-        (user_id uuid DEFAULT uuid_generate_v4(), username VARCHAR(20), \
+        (user_id VARCHAR(50), username VARCHAR(20), \
         email VARCHAR(20), password VARCHAR(20), admin BOOLEAN DEFAULT FALSE);"
         self.cursor.execute(create_user_table)
 
-    def insert_user_data(self, username, email, password, admin):
+    def insert_user_data(self, user_id, username, email, password, admin):
         """Insert user data into the database."""
-        user_query = "INSERT INTO users (username, email, password, admin)\
-        VALUES ('{}', '{}', '{}', '{}');".format(username, email, password, admin)
+        user_query = "INSERT INTO users (user_id, username, email, password, admin)\
+        VALUES ('{}', '{}', '{}', '{}', '{}');".format(
+            user_id, username, email, password, admin)
         self.cursor.execute(user_query)
 
 

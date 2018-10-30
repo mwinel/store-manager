@@ -1,4 +1,5 @@
 import re
+import uuid
 from flask import request, jsonify
 from app.main.auth import api
 from app.main.auth.users import (create_store_owner, get_all_users, 
@@ -7,6 +8,7 @@ from app.main.auth.users import (create_store_owner, get_all_users,
 
 @api.route("/admin/signup", methods=['POST'])
 def register_admin():
+    user_id = str(uuid.uuid4())
     username = request.json.get('username')
     email = request.json.get('email')
     password = request.json.get('password')
@@ -20,7 +22,7 @@ def register_admin():
     user_exists = get_user_by_username(username)
     if user_exists:
         return jsonify({"message": "User already exists."}), 400
-    return create_store_owner(username, email, password, admin)
+    return create_store_owner(user_id, username, email, password, admin)
 
 
 @api.route("/users", methods=['GET'])

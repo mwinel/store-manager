@@ -4,12 +4,13 @@ from app.db import Database
 
 db = Database()
 
-def create_store_owner(username, email, password, admin):
+def create_store_owner(user_id, username, email, password, admin):
     """
     Creates a new store owner.
     """
-    user = User(username=username, email=email, password=password, admin=admin)
-    db.insert_user_data(username, email, password, admin)
+    user = User(user_id=user_id, username=username, email=email,
+                password=password, admin=admin)
+    db.insert_user_data(user_id, username, email, password, admin)
     return jsonify({"message": "account successfully created."}), 201
 
 def get_all_users():
