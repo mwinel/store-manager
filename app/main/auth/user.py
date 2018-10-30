@@ -1,20 +1,14 @@
 from flask import jsonify
-from app.db import users
+from app.db import Database
+
+
+db = Database()
 
 
 def get_all_users():
     """
     This method returns a list of all users.
     """
-    return jsonify(Users=[i.serialize for i in users])
+    users = db.fetch_users()
+    return jsonify(Users=users)
 
-
-def get_user_by_username(username):
-    """
-    This method checks for a user given the username.
-    parameters: username
-    returns: True
-    """
-    for user in users:
-        if user.username == username:
-            return True
