@@ -1,5 +1,5 @@
 from flask import jsonify
-from app.models import Product
+from app.main.product.models import Product
 from app.db import Database
 
 db = Database()
@@ -26,12 +26,3 @@ def get_product_by_name(name):
     """
     product = db.get_by_argument('products', 'name', name)
     return product
-
-def get_product(product_id):
-    """
-    Get product by its id.
-    """
-    product = db.get_by_argument('products', 'product_id', product_id)
-    if not product:
-        return jsonify({"message": "product does not exist."}), 404
-    return jsonify(Product=product)

@@ -10,22 +10,15 @@ class Database:
     def __init__(self):
         """Initialize database connection."""
         self.connection = psycopg2.connect(
-            database="store_manager", user="murungi", password="myPassword", port="5432")
+            database="store_manager", port="5432")
         self.connection.autocommit = True
         self.cursor = self.connection.cursor(cursor_factory=RealDictCursor)
         print("connected yessssssss")
 
     def create_tables(self):
         """Creates all database tables."""
-        create_user_table = "CREATE TABLE IF NOT EXISTS users\
-        (user_id VARCHAR(50), username VARCHAR(20), \
-        email VARCHAR(20), password VARCHAR(20), admin BOOLEAN DEFAULT FALSE);"
-        self.cursor.execute(create_user_table)
-
-        create_product_table = "CREATE TABLE IF NOT EXISTS products\
-        (product_id SERIAL PRIMARY KEY, name VARCHAR(40), description VARCHAR(200),\
-        quantity INTEGER, price INTEGER);"
-        self.cursor.execute(create_product_table)
+        with open('app/schema.sql') as tables:
+            self.cursor.execute(tables.read())
 
     def insert_user_data(self, *args):
         """Insert user data into the database."""
@@ -62,7 +55,7 @@ class Database:
         query = "SELECT * FROM {} WHERE {} = '{}';".format(
             table, column, argument)
         self.cursor.execute(query)
-        result = self.cursor.fetchall()
+        result = self.cursor.fetchone()
         return result
 
     def drop_tables(self):

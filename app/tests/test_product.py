@@ -1,6 +1,6 @@
 import json
 from app.tests.base import BaseTestCase
-from app.models import Product
+from app.main.product.models import Product
 
 
 class TestProductObject(BaseTestCase):

@@ -1,5 +1,5 @@
 from flask import jsonify
-from app.models import User
+from app.main.auth.models import User
 from app.db import Database
 
 db = Database()

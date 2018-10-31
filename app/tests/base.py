@@ -1,7 +1,8 @@
 import unittest
 from manage import app
 from app.main.errors.request_errors import RequestError
-from app.models import User, Product, Sale
+from app.main.auth.models import User
+from app.main.product.models import Product
 
 
 class BaseTestCase(unittest.TestCase):
@@ -12,9 +13,8 @@ class BaseTestCase(unittest.TestCase):
         self.request_error = RequestError()
         self.admin = User("1", "nelson", "nelson@example.com", "123456", True)
         self.product = Product("Tecno W3", "Tecno smart phone", "2", "$150")
-        self.sale = Sale("Sony LED TV", "2", "299")
 
-        # Dummy attendants
+        # Dummy users
         self.admin1 = {
             "username": "sally",
             "email": "sally@example.com",
@@ -36,6 +36,7 @@ class BaseTestCase(unittest.TestCase):
             "admin": True
         }
 
+        # Dummy products
         self.product1 = {
             "name": "Tecno W3",
             "description": "Mobile Smart Phone",

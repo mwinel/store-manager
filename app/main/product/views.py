@@ -1,8 +1,10 @@
 from flask import jsonify, request
 from app.main.product import api
 from app.main.product.products import (create_product, get_product_by_name,
-                                       get_product, get_all_products)
+                                       get_all_products)
+from app.db import Database
 
+db = Database()
 
 @api.route("/products", methods=['POST'])
 def add_product():
@@ -21,13 +23,14 @@ def add_product():
         return jsonify({"message": "Product already exists."}), 400
     return create_product(name, description, quantity, price)
 
-
 @api.route("/products", methods=['GET'])
 def get_products():
     return get_all_products(), 200
 
-
 @api.route("/products/<int:product_id>", methods=['GET'])
 def fetch_product(product_id):
-    return get_product(product_id), 200
+    product = db.get_by_argument('products', 'product_id', product_id)
+    if product:
+        return jsonify(Product=product), 200
+    return jsonify({"message": "product does not exist."}), 404
     
