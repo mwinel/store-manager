@@ -8,7 +8,7 @@ class Database:
     def __init__(self):
         """Initialize database connection."""
         self.connection = psycopg2.connect(
-            database="store_manager", port="5432")
+            database="store_manager", user="murungi", password="myPassword", port="5432")
         self.connection.autocommit = True
         self.cursor = self.connection.cursor()
         print("connected yessssssss")
