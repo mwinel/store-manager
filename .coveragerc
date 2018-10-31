@@ -1,6 +1,13 @@
 # Add coverage configurations
 [report]
 
+omit = 
+    */python?.?/*
+    */site-packages/*
+    */home/travis/virtualenv/*
+    */dist-packages/*
+    tests/*
+
 # Exclude from consideration
 exclude_lines = 
     pragma: no cover
