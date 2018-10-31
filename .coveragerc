@@ -1,12 +1,10 @@
 # Add coverage configurations
-[report]
+[run]
 
-omit = 
-    */python?.?/*
-    */site-packages/*
-    */home/travis/virtualenv/*
-    */dist-packages/*
-    tests/*
+source =
+    app/main
+    
+[report]
 
 # Exclude from consideration
 exclude_lines = 
