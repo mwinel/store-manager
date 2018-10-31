@@ -36,6 +36,27 @@ class BaseTestCase(unittest.TestCase):
             "admin": True
         }
 
+        self.attendant1 = {
+            "username": "amy",
+            "email": "amy@example.com",
+            "password": "123456",
+            "admin": False
+        }
+
+        self.attendant2 = {
+            "username": "lisa",
+            "email": "lisa@example.com",
+            "password": "123456",
+            "admin": False
+        }
+
+        self.attendant3 = {
+            "username": "susan",
+            "email": "susan@example.com",
+            "password": "",
+            "admin": False
+        }
+
         # Dummy products
         self.product1 = {
             "name": "Tecno W3",
