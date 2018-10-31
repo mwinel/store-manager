@@ -15,3 +15,10 @@ CREATE TABLE IF NOT EXISTS products (
     quantity INTEGER, 
     price INTEGER
 );
+
+CREATE TABLE IF NOT EXISTS sales (
+    sale_id SERIAL PRIMARY KEY,
+    name VARCHAR(40),
+    quantity INTEGER,
+    cost INTEGER
+)
