@@ -1,9 +1,4 @@
 # Add coverage configurations
-[run]
-
-source =
-    app/main
-    
 [report]
 
 # Exclude from consideration
