@@ -6,7 +6,7 @@ db = Database()
 
 def create_user(*args):
     """
-    Creates a new store owner.
+    Creates a new store user.
     """
     user_id = args[0]
     username = args[1]
@@ -22,7 +22,7 @@ def get_all_users():
     """
     This method returns a list of all users.
     """
-    users = db.fetch_users()
+    users = db.get_all('users')
     return jsonify(Users=users)
 
 def get_user_by_username(username):

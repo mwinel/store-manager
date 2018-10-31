@@ -32,4 +32,7 @@ def create_app(config_class):
     from app.main.attendant import api as attendant_blueprint
     app.register_blueprint(attendant_blueprint, url_prefix='/api/v1/auth')
 
+    from app.main.product import api as product_blueprint
+    app.register_blueprint(product_blueprint, url_prefix='/api/v1/')
+
     return app

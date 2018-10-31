@@ -20,39 +20,26 @@ class User:
 class Product:
     """
     This class defines the product in terms of its
-    id, name, description, quantity, price, category
-    and date.
+    id, name, description, quantity, price.
     """
 
-    product_id = 1
-
-    def __init__(self, name, description, quantity, price, category):
+    def __init__(self, name, description, quantity, price):
         self.name = name
         self.description = description
         self.quantity = quantity
         self.price = price
-        self.category = category
-        self.date = datetime.datetime.utcnow()
-        self.id = Product.product_id
-        Product.product_id += 1
 
     @property
     def serialize(self):
         """
-        Returns product data in JSON serializable format.
+        Returns a sale order data in JSON serializable format.
         """
         return {
-            "id": self.id,
             "name": self.name,
             "description": self.description,
             "quantity": self.quantity,
             "price": self.price,
-            "category": self.category,
-            "added on": self.date
         }
-
-    def total_cost(self, quantity, price):
-        return quantity * price
 
 
 # Define sales class

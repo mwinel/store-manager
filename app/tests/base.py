@@ -11,8 +11,7 @@ class BaseTestCase(unittest.TestCase):
         self.app = app.test_client()
         self.request_error = RequestError()
         self.admin = User("1", "nelson", "nelson@example.com", "123456", True)
-        self.product = Product("Tecno W3", "Tecno smart phone", "2", "$150",
-                               "Mobile Phones")
+        self.product = Product("Tecno W3", "Tecno smart phone", "2", "$150")
         self.sale = Sale("Sony LED TV", "2", "299")
 
         # Dummy attendants
@@ -35,6 +34,20 @@ class BaseTestCase(unittest.TestCase):
             "email": "amy@example.com",
             "password": "",
             "admin": True
+        }
+
+        self.product1 = {
+            "name": "Tecno W3",
+            "description": "Mobile Smart Phone",
+            "quantity": "3",
+            "price": "200"
+        }
+
+        self.product2 = {
+            "name": " ",
+            "description": "LCD 32 inch television",
+            "quantity": "3",
+            "price": "600"
         }
 
     def tearDown(self):

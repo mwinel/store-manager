@@ -1,4 +1,6 @@
 import psycopg2
+from psycopg2.extras import RealDictCursor
+
 
 class Database:
     """
@@ -10,7 +12,7 @@ class Database:
         self.connection = psycopg2.connect(
             database="store_manager", user="murungi", password="myPassword", port="5432")
         self.connection.autocommit = True
-        self.cursor = self.connection.cursor()
+        self.cursor = self.connection.cursor(cursor_factory=RealDictCursor)
         print("connected yessssssss")
 
     def create_tables(self):
@@ -19,6 +21,11 @@ class Database:
         (user_id VARCHAR(50), username VARCHAR(20), \
         email VARCHAR(20), password VARCHAR(20), admin BOOLEAN DEFAULT FALSE);"
         self.cursor.execute(create_user_table)
+
+        create_product_table = "CREATE TABLE IF NOT EXISTS products\
+        (product_id SERIAL PRIMARY KEY, name VARCHAR(40), description VARCHAR(200),\
+        quantity INTEGER, price INTEGER);"
+        self.cursor.execute(create_product_table)
 
     def insert_user_data(self, *args):
         """Insert user data into the database."""
@@ -32,21 +39,23 @@ class Database:
             user_id, username, email, password, admin)
         self.cursor.execute(user_query)
 
-    def fetch_users(self):
-        """Fetch all users."""
-        self.cursor.execute("SELECT * FROM users")
+    def insert_product(self, *args):
+        """Insert product data into the database."""
+        name = args[0]
+        description = args[1]
+        quantity = args[2]
+        price = args[3]
+        product_query = "INSERT INTO products (name, description, quantity,\
+        price) VALUES ('{}', '{}', '{}', '{}');".format(name, description, quantity,
+                                                        price)
+        self.cursor.execute(product_query)
+
+    def get_all(self, table):
+        """Return all rows from a table."""
+        query = "SELECT * FROM {};".format(table)
+        self.cursor.execute(query)
         rows = self.cursor.fetchall()
-        users = []
-        for row in rows:
-            row = {
-                'user_id': row[0],
-                'username': row[1],
-                'email': row[2],
-                'password': row[3],
-                'admin': row[4]
-            }
-            users.append(row)
-        return users
+        return rows
 
     def get_by_argument(self, table, column, argument):
         """Return a query by argument."""
@@ -59,6 +68,6 @@ class Database:
     def drop_tables(self):
         """Drops database tables."""
         query = "DROP TABLE IF EXISTS {0} CASCADE"
-        tables = ["users"]
+        tables = ["users", "products"]
         for table in tables:
             self.cursor.execute(query.format(table))
