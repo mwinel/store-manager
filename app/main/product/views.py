@@ -14,9 +14,9 @@ def add_product():
     price = request.json.get('price')
     # if admin is not True:
     #     return jsonify({"message": "Unauthorized Access!"}), 401
-    if name == "" or description == "":
+    if name.strip() == "" or description.strip() == "":
         return jsonify({"message": "Fields cannot be left empty."}), 400
-    if price == "" or quantity == "":
+    if price.strip() == "" or quantity.strip() == "":
         return jsonify({"message": "Fields cannot be left empty."}), 400
     already_exists = get_product_by_name(name)
     if already_exists:
@@ -33,4 +33,11 @@ def fetch_product(product_id):
     if product:
         return jsonify(Product=product), 200
     return jsonify({"message": "product does not exist."}), 404
-    
+
+@api.route("/products/<int:product_id>", methods=['DELETE'])
+def delete_product(product_id):
+    product = db.get_by_argument('products', 'product_id', product_id)
+    if not product:
+        return jsonify({"message": "product does not exist."}), 404
+    db.delete_by_argument('products', 'product_id', product_id)
+    return jsonify({"message": "product successfully deleted."}), 200

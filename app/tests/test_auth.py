@@ -54,6 +54,14 @@ class TestAdminAuth(BaseTestCase):
         self.assertTrue(rv.status_code, 400)
         b"Fields cannot be left empty." in rv.data
 
+    def test_signup_with_empty_spaced_field(self):
+        """Test store admin can not signup with empty a spaced field."""
+        rv = self.app.post("/api/v1/auth/admin/signup",
+                           data=json.dumps(self.admin4),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 400)
+        b"Fields cannot be left empty." in rv.data
+
     def test_signup_with_short_password(self):
         """Test store admin can not signup with short password."""
         rv = self.app.post("/api/v1/auth/admin/signup",

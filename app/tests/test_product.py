@@ -58,7 +58,7 @@ class TestProductCase(BaseTestCase):
         self.assertTrue(res.status_code, 400)
         b"Product already exists." in res.data
 
-    def test_create_product_with_empty_fields(self):
+    def test_create_product_with_empty_name_fields(self):
         """Test API can not create a product with empty fields."""
         rv = self.app.post("/api/v1/products",
                            data=json.dumps(self.product2),
@@ -66,6 +66,18 @@ class TestProductCase(BaseTestCase):
         self.assertTrue(rv.status_code, 201)
         res = self.app.post("/api/v1/products",
                             data=json.dumps(self.product2),
+                            content_type='application/json')
+        self.assertTrue(res.status_code, 400)
+        b"Fields cannot be left empty." in res.data
+
+    def test_create_product_with_empty_price_fields(self):
+        """Test API can not create a product with empty fields."""
+        rv = self.app.post("/api/v1/products",
+                           data=json.dumps(self.product3),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 201)
+        res = self.app.post("/api/v1/products",
+                            data=json.dumps(self.product3),
                             content_type='application/json')
         self.assertTrue(res.status_code, 400)
         b"Fields cannot be left empty." in res.data
@@ -103,3 +115,27 @@ class TestProductCase(BaseTestCase):
                            content_type='application/json')
         self.assertTrue(res.status_code, 404)
         b"Product does not exist." in res.data
+
+    def test_delete_a_product(self):
+        """Test API can delete a product."""
+        rv = self.app.post("/api/v1/products",
+                           data=json.dumps(self.product1),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 201)
+        res = self.app.delete("/api/v1/products/1",
+                              data=json.dumps(self.product1),
+                              content_type='application/json')
+        self.assertTrue(res.status_code, 200)
+        b"product successfully deleted." in res.data
+
+    def test_delete_for_a_non_existing_product(self):
+        """Test delete for a non existing product."""
+        rv = self.app.post("/api/v1/products",
+                           data=json.dumps(self.product1),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 201)
+        res = self.app.delete("/api/v1/products/1",
+                              data=json.dumps(self.product4),
+                              content_type='application/json')
+        self.assertTrue(res.status_code, 404)
+        b"product does not exist.." in res.data

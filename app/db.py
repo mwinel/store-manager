@@ -58,6 +58,12 @@ class Database:
         result = self.cursor.fetchone()
         return result
 
+    def delete_by_argument(self, table, colum, argument):
+        """Delete a record from the table"""
+        query = "DELETE FROM {} WHERE {} = '{}'".format(
+            table, colum, argument)
+        self.cursor.execute(query)
+
     def drop_tables(self):
         """Drops database tables."""
         query = "DROP TABLE IF EXISTS {0} CASCADE"

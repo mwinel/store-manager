@@ -36,6 +36,13 @@ class BaseTestCase(unittest.TestCase):
             "admin": True
         }
 
+        self.admin4 = {
+            "username": "am  y",
+            "email": "amy@example.com",
+            "password": "654321",
+            "admin": True
+        }
+
         self.attendant1 = {
             "username": "amy",
             "email": "amy@example.com",
@@ -71,6 +78,15 @@ class BaseTestCase(unittest.TestCase):
             "quantity": "3",
             "price": "600"
         }
+
+        self.product3 = {
+            "name": " ",
+            "description": "LCD 32 inch television",
+            "quantity": "3",
+            "price": " "
+        }
+
+        self.product4 = {}
 
     def tearDown(self):
         pass
