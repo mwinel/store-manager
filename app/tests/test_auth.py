@@ -133,8 +133,9 @@ class TestAttendantAuth(BaseTestCase):
         res = self.app.post("/api/v1/auth/admin/login",
                             data=json.dumps(self.admin1), headers=self.headers)
         self.assertTrue(res.status_code, 200)
+        self.headers['Authorization'] = "Bearer " + self.access_token
         rv = self.app.post("/api/v1/auth/signup",
-                           data=json.dumps(self.attendant1), headers=self.headers)
+                           data=json.dumps(self.attendant1))
         self.assertTrue(rv.status_code, 201)
         b"account successfully created." in rv.data
 
