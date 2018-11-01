@@ -195,7 +195,7 @@ class TestProductCase(BaseTestCase):
     def test_update_product_with_empty_price_fields(self):
         """Test API can not update a product with empty fields."""
         res = self.app.put("/api/v1/products/1",
-                            data=json.dumps(self.product3),
+                            data=json.dumps(self.product5),
                             content_type='application/json')
         self.assertTrue(res.status_code, 400)
         b"Fields cannot be left empty." in res.data
@@ -227,7 +227,7 @@ class TestProductCase(BaseTestCase):
     def test_update_product_with_no_price_field(self):
         """Test API can not update a product with no price field."""
         res = self.app.put("/api/v1/products/1",
-                            data=json.dumps(self.product7),
+                            data=json.dumps(self.product8),
                             content_type='application/json')
         self.assertTrue(res.status_code, 400)
         b"price field missing." in res.data
