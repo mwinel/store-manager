@@ -13,6 +13,15 @@ def create_product(name, description, quantity, price):
     db.insert_product(name, description, quantity, price)
     return jsonify({"message": "product successfully added."}), 201
 
+def update_a_product(name, description, quantity, price):
+    """
+    Updates a product.
+    """
+    product = Product(name=name, description=description, quantity=quantity,
+                      price=price)
+    db.update_product(name, description, quantity, price)
+    return jsonify({"message": "product successfully updated."}), 201
+
 def get_all_products():
     """
     This method returns a list of all products.

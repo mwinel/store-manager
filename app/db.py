@@ -10,7 +10,7 @@ class Database:
     def __init__(self):
         """Initialize database connection."""
         self.connection = psycopg2.connect(
-            database="store_manager", port="5432")
+            database="store_manager", user="murungi", password="myPassword", port="5432")
         self.connection.autocommit = True
         self.cursor = self.connection.cursor(cursor_factory=RealDictCursor)
         print("connected yessssssss")
@@ -42,6 +42,21 @@ class Database:
         price) VALUES ('{}', '{}', '{}', '{}');".format(name, description, quantity,
                                                         price)
         self.cursor.execute(product_query)
+
+    def update_product(self, *args):
+        name = args[0]
+        description = args[1]
+        quantity = args[2]
+        price = args[3]
+        query = "UPDATE products SET name = '{}', description = '{}',\
+                 quantity = '{}', price = '{}'".format(name, description,
+                                                       quantity, price)
+        self.cursor.execute(query)
+        row = self.cursor.rowcount
+        if int(row) > 0:
+            return True
+        else:
+            return False
 
     def get_all(self, table):
         """Return all rows from a table."""

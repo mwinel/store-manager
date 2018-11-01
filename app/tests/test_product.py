@@ -139,3 +139,27 @@ class TestProductCase(BaseTestCase):
                               content_type='application/json')
         self.assertTrue(res.status_code, 404)
         b"product does not exist.." in res.data
+
+    def test_update_a_product(self):
+        """Test update for a product."""
+        rv = self.app.post("/api/v1/products",
+                           data=json.dumps(self.product1),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 201)
+        res = self.app.put("/api/v1/products/1",
+                           data=json.dumps({
+                               "name": "Tecno XYZ"
+                            }),
+                           content_type='application/json')
+        self.assertTrue(res.status_code, 201)
+        b"product successfully updated" in res.data
+
+    def test_update_a_non_existing_product(self):
+        """Test update for a non existing product."""
+        res = self.app.put("/api/v1/products/1000",
+                           data=json.dumps({
+                               "name": "Tecno XYZ"
+                            }),
+                           content_type='application/json')
+        self.assertTrue(res.status_code, 404)
+        b"product does not exist." in res.data
