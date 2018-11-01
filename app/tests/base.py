@@ -20,7 +20,7 @@ class BaseTestCase(unittest.TestCase):
                                     "username": "sally",
                                     "password": "123456"
                                 }))
-        self.access_token = json.loads(response.data.decode('utf-8'))
+        self.access_token = json.loads(response.data.decode('utf-8'))["access_token"]
 
         # Dummy users
         self.admin1 = {
@@ -155,7 +155,6 @@ class BaseTestCase(unittest.TestCase):
             "description": "LCD 32 inch television",
             "quantity": "3",
         }
-
 
 
     def tearDown(self):
