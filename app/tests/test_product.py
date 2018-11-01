@@ -154,11 +154,7 @@ class TestProductCase(BaseTestCase):
 
     def test_delete_for_a_non_existing_product(self):
         """Test delete for a non existing product."""
-        rv = self.app.post("/api/v1/products",
-                           data=json.dumps(self.product1),
-                           content_type='application/json')
-        self.assertTrue(rv.status_code, 201)
-        res = self.app.delete("/api/v1/products/1",
+        res = self.app.delete("/api/v1/products/40000",
                               data=json.dumps(self.product4),
                               content_type='application/json')
         self.assertTrue(res.status_code, 404)
@@ -187,3 +183,51 @@ class TestProductCase(BaseTestCase):
                            content_type='application/json')
         self.assertTrue(res.status_code, 404)
         b"product does not exist." in res.data
+
+    def test_update_product_with_empty_name_fields(self):
+        """Test API can not create a update with empty fields."""
+        res = self.app.post("/api/v1/products/1",
+                            data=json.dumps(self.product2),
+                            content_type='application/json')
+        self.assertTrue(res.status_code, 400)
+        b"Fields cannot be left empty." in res.data
+
+    def test_update_product_with_empty_price_fields(self):
+        """Test API can not update a product with empty fields."""
+        res = self.app.post("/api/v1/products/1",
+                            data=json.dumps(self.product3),
+                            content_type='application/json')
+        self.assertTrue(res.status_code, 400)
+        b"Fields cannot be left empty." in res.data
+
+    def test_update_product_with_no_name_field(self):
+        """Test API can not update a product with no name field."""
+        res = self.app.post("/api/v1/products/1",
+                            data=json.dumps(self.product5),
+                            content_type='application/json')
+        self.assertTrue(res.status_code, 400)
+        b"name field missing." in res.data
+
+    def test_update_product_with_no_description_field(self):
+        """Test API can not update a product with no description field."""
+        res = self.app.post("/api/v1/products/1",
+                            data=json.dumps(self.product6),
+                            content_type='application/json')
+        self.assertTrue(res.status_code, 400)
+        b"description field missing." in res.data
+
+    def test_update_product_with_no_quantity_field(self):
+        """Test API can not update a product with no quantity field."""
+        res = self.app.post("/api/v1/products/1",
+                            data=json.dumps(self.product7),
+                            content_type='application/json')
+        self.assertTrue(res.status_code, 400)
+        b"quantity field missing." in res.data
+
+    def test_update_product_with_no_price_field(self):
+        """Test API can not update a product with no price field."""
+        res = self.app.post("/api/v1/products/1",
+                            data=json.dumps(self.product7),
+                            content_type='application/json')
+        self.assertTrue(res.status_code, 400)
+        b"price field missing." in res.data
