@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS users (
     user_id VARCHAR(50), 
     username VARCHAR(20),
     email VARCHAR(20), 
-    password VARCHAR(20), 
+    password VARCHAR(200), 
     admin BOOLEAN DEFAULT FALSE
 );
 

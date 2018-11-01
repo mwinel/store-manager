@@ -30,4 +30,3 @@ class Validation:
             return "fields cannot be empty."
         if quantity == " " or price == " ":
             return "fields cannot be empty."
-

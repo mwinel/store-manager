@@ -43,6 +43,13 @@ class Database:
                                                         price)
         self.cursor.execute(product_query)
 
+    def get_admin_status(self):
+        """Returns user whose admin status is True."""
+        query = "SELECT * FROM users WHERE admin = 't'"
+        self.cursor.execute(query)
+        admin = self.cursor.fetchone()
+        return admin
+
     def update_product(self, *args):
         name = args[0]
         description = args[1]
@@ -82,6 +89,6 @@ class Database:
     def drop_tables(self):
         """Drops database tables."""
         query = "DROP TABLE IF EXISTS {0} CASCADE"
-        tables = ["users", "products"]
+        tables = ["users", "products", "sales"]
         for table in tables:
             self.cursor.execute(query.format(table))

@@ -86,14 +86,6 @@ class TestAdminAuth(BaseTestCase):
         self.assertTrue(rv.status_code, 400)
         b"email field missing." in rv.data
 
-    def test_signup_with_no_password_field(self):
-        """Test store admin can not signup with no password field."""
-        rv = self.app.post("/api/v1/auth/admin/signup",
-                           data=json.dumps(self.admin7),
-                           content_type='application/json')
-        self.assertTrue(rv.status_code, 400)
-        b"password field missing." in rv.data
-
     def test_store_admin_login(self):
         """Test API can login a store admin."""
         rv = self.app.post("/api/v1/auth/admin/signup",
@@ -184,14 +176,6 @@ class TestAttendantAuth(BaseTestCase):
                            content_type='application/json')
         self.assertTrue(rv.status_code, 400)
         b"email field missing." in rv.data
-
-    def test_create_attendant_with_no_password_field(self):
-        """Test store attendant can not signup with no password field."""
-        rv = self.app.post("/api/v1/auth/signup",
-                           data=json.dumps(self.attendant5),
-                           content_type='application/json')
-        self.assertTrue(rv.status_code, 400)
-        b"password field missing." in rv.data
 
     def test_store_attendant_login(self):
         """Test API can login a store attendant."""

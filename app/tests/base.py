@@ -32,7 +32,7 @@ class BaseTestCase(unittest.TestCase):
         self.admin3 = {
             "username": "amy",
             "email": "amy@example.com",
-            "password": "123",
+            "password": "pis",
             "admin": True
         }
 
@@ -78,7 +78,7 @@ class BaseTestCase(unittest.TestCase):
         self.attendant3 = {
             "username": "susan",
             "email": "susan@example.com",
-            "password": "",
+            "password": "pis",
             "admin": False
         }
 

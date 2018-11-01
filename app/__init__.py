@@ -1,5 +1,6 @@
 from flask import Flask
 from flasgger import Swagger, swag_from
+from flask_jwt_extended import JWTManager
 from app.config import app_config
 from app.main.errors.request_errors import RequestError
 
@@ -15,8 +16,10 @@ def create_app(config_class):
         'title': 'Store Manager API',
         'universion': 3
     }
-
     swagger = Swagger(app)
+    app.config['SECRET_KEY'] = "yoyo"
+    app.config['JWT_SECRET_KEY'] = "neverrunwithme"
+    jwt = JWTManager(app)
 
     # Request Exceptions
     app.errorhandler(404)(RequestError.not_found)
