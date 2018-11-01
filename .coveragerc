@@ -7,3 +7,5 @@ omit =
     # omit this single file
     app/db.py
     app/schema.sql
+    app/main/auth/users.py
+    app/main/product/products.py
