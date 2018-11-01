@@ -60,10 +60,6 @@ class TestProductCase(BaseTestCase):
 
     def test_create_product_with_empty_name_fields(self):
         """Test API can not create a product with empty fields."""
-        rv = self.app.post("/api/v1/products",
-                           data=json.dumps(self.product2),
-                           content_type='application/json')
-        self.assertTrue(rv.status_code, 201)
         res = self.app.post("/api/v1/products",
                             data=json.dumps(self.product2),
                             content_type='application/json')
@@ -72,15 +68,43 @@ class TestProductCase(BaseTestCase):
 
     def test_create_product_with_empty_price_fields(self):
         """Test API can not create a product with empty fields."""
-        rv = self.app.post("/api/v1/products",
-                           data=json.dumps(self.product3),
-                           content_type='application/json')
-        self.assertTrue(rv.status_code, 201)
         res = self.app.post("/api/v1/products",
                             data=json.dumps(self.product3),
                             content_type='application/json')
         self.assertTrue(res.status_code, 400)
         b"Fields cannot be left empty." in res.data
+
+    def test_create_product_with_no_name_field(self):
+        """Test API can not create a product with no name field."""
+        res = self.app.post("/api/v1/products",
+                            data=json.dumps(self.product5),
+                            content_type='application/json')
+        self.assertTrue(res.status_code, 400)
+        b"name field missing." in res.data
+
+    def test_create_product_with_no_description_field(self):
+        """Test API can not create a product with no description field."""
+        res = self.app.post("/api/v1/products",
+                            data=json.dumps(self.product6),
+                            content_type='application/json')
+        self.assertTrue(res.status_code, 400)
+        b"description field missing." in res.data
+
+    def test_create_product_with_no_quantity_field(self):
+        """Test API can not create a product with no quantity field."""
+        res = self.app.post("/api/v1/products",
+                            data=json.dumps(self.product7),
+                            content_type='application/json')
+        self.assertTrue(res.status_code, 400)
+        b"quantity field missing." in res.data
+
+    def test_create_product_with_no_price_field(self):
+        """Test API can not create a product with no price field."""
+        res = self.app.post("/api/v1/products",
+                            data=json.dumps(self.product7),
+                            content_type='application/json')
+        self.assertTrue(res.status_code, 400)
+        b"price field missing." in res.data
 
     def test_get_all_products(self):
         """Test API can fetch all products."""

@@ -70,6 +70,30 @@ class TestAdminAuth(BaseTestCase):
         self.assertTrue(rv.status_code, 400)
         b"Password too short." in rv.data
 
+    def test_signup_with_no_username_field(self):
+        """Test store admin can not signup with no username field."""
+        rv = self.app.post("/api/v1/auth/admin/signup",
+                           data=json.dumps(self.admin5),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 400)
+        b"username field missing." in rv.data
+
+    def test_signup_with_no_email_field(self):
+        """Test store admin can not signup with no email field."""
+        rv = self.app.post("/api/v1/auth/admin/signup",
+                           data=json.dumps(self.admin6),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 400)
+        b"email field missing." in rv.data
+
+    def test_signup_with_no_password_field(self):
+        """Test store admin can not signup with no password field."""
+        rv = self.app.post("/api/v1/auth/admin/signup",
+                           data=json.dumps(self.admin7),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 400)
+        b"password field missing." in rv.data
+
     def test_store_admin_login(self):
         """Test API can login a store admin."""
         rv = self.app.post("/api/v1/auth/admin/signup",
@@ -129,7 +153,7 @@ class TestAttendantAuth(BaseTestCase):
         self.assertTrue(res.status_code, 400)
         b"User already exists." in rv.data
 
-    def test_signup_with_empty_username_field(self):
+    def test_create_attendant_with_empty_username_field(self):
         """Test store attendant can not signup with empty username field."""
         rv = self.app.post("/api/v1/auth/admin/signup",
                            data=json.dumps(self.attendant2),
@@ -137,13 +161,37 @@ class TestAttendantAuth(BaseTestCase):
         self.assertTrue(rv.status_code, 400)
         b"Fields cannot be left empty." in rv.data
 
-    def test_signup_with_short_password(self):
+    def test_create_attendant_with_short_password(self):
         """Test store attendant can not signup with short password."""
         rv = self.app.post("/api/v1/auth/signup",
                            data=json.dumps(self.attendant3),
                            content_type='application/json')
         self.assertTrue(rv.status_code, 400)
         b"Password too short." in rv.data
+
+    def test_create_attendant_with_no_username_field(self):
+        """Test store attendant can not signup with no username field."""
+        rv = self.app.post("/api/v1/auth/signup",
+                           data=json.dumps(self.attendant4),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 400)
+        b"username field missing." in rv.data
+
+    def test_create_attendant_with_no_email_field(self):
+        """Test store attendant can not signup with no email field."""
+        rv = self.app.post("/api/v1/auth/signup",
+                           data=json.dumps(self.attendant5),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 400)
+        b"email field missing." in rv.data
+
+    def test_create_attendant_with_no_password_field(self):
+        """Test store attendant can not signup with no password field."""
+        rv = self.app.post("/api/v1/auth/signup",
+                           data=json.dumps(self.attendant5),
+                           content_type='application/json')
+        self.assertTrue(rv.status_code, 400)
+        b"password field missing." in rv.data
 
     def test_store_attendant_login(self):
         """Test API can login a store attendant."""

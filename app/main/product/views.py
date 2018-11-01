@@ -14,8 +14,8 @@ def add_product():
     description = request.json.get('description')
     quantity = request.json.get('quantity')
     price = request.json.get('price')
-    
-    validate_product = validate(name, description, quantity, price)
+    validate_product = validate.product_validation(name, description,
+                                                   quantity, price)
     if validate_product:
         return jsonify({"message": validate_product}), 400
     already_exists = get_product_by_name(name)
@@ -35,12 +35,10 @@ def edit_product(product_id):
         description = request.json.get('description')
         quantity = request.json.get('quantity')
         price = request.json.get('price')
-        # if name.strip() == "" or description.strip() == "":
-        #     return jsonify({"message": "Fields cannot be left empty."}), 400
-        # if price.strip() == "" or quantity.strip() == "":
-        #     return jsonify({"message": "Fields cannot be left empty."}), 400
-
-        valida
+        validate_update = validate.product_validation(name, description,
+                                                      quantity, price)
+        if validate_update:
+            return jsonify({"message": validate_update}), 400
         already_exists = get_product_by_name(name)
         if already_exists:
             return jsonify({"message": "Product already exists."}), 400

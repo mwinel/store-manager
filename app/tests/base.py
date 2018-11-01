@@ -32,7 +32,7 @@ class BaseTestCase(unittest.TestCase):
         self.admin3 = {
             "username": "amy",
             "email": "amy@example.com",
-            "password": "",
+            "password": "123",
             "admin": True
         }
 
@@ -40,6 +40,24 @@ class BaseTestCase(unittest.TestCase):
             "username": "am  y",
             "email": "amy@example.com",
             "password": "654321",
+            "admin": True
+        }
+
+        self.admin5 = {
+            "email": "amy@example.com",
+            "password": "654321",
+            "admin": True
+        }
+
+        self.admin6 = {
+            "username": "jonah",
+            "password": "654321",
+            "admin": True
+        }
+
+        self.admin7 = {
+            "username": "ruth",
+            "email": "amy@example.com",
             "admin": True
         }
 
@@ -61,6 +79,24 @@ class BaseTestCase(unittest.TestCase):
             "username": "susan",
             "email": "susan@example.com",
             "password": "",
+            "admin": False
+        }
+
+        self.attendant4 = {
+            "email": "susan@example.com",
+            "password": "123456",
+            "admin": False
+        }
+
+        self.attendant5 = {
+            "username": "susan",
+            "password": "123456",
+            "admin": False
+        }
+
+        self.attendant3 = {
+            "username": "susan",
+            "email": "susan@example.com",
             "admin": False
         }
 
@@ -87,6 +123,32 @@ class BaseTestCase(unittest.TestCase):
         }
 
         self.product4 = {}
+
+        self.product5 = {
+            "description": "LCD 32 inch television",
+            "quantity": "3",
+            "price": " "
+        }
+
+        self.product6 = {
+            "name": "Soap",
+            "quantity": "3",
+            "price": " "
+        }
+
+        self.product7 = {
+            "name": "Salt",
+            "description": "LCD 32 inch television",
+            "price": "100"
+        }
+
+        self.product8 = {
+            "name": "Ball",
+            "description": "LCD 32 inch television",
+            "quantity": "3",
+        }
+
+
 
     def tearDown(self):
         pass
