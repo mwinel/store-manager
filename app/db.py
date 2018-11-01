@@ -13,7 +13,6 @@ class Database:
             database="store_manager", port="5432")
         self.connection.autocommit = True
         self.cursor = self.connection.cursor(cursor_factory=RealDictCursor)
-        print("connected yessssssss")
 
     def create_tables(self):
         """Creates all database tables."""

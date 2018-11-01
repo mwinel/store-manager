@@ -20,7 +20,7 @@ class BaseTestCase(unittest.TestCase):
                                     "username": "sally",
                                     "password": "123456"
                                 }))
-        self.access_token = json.loads(response.data)['access_token']
+        self.access_token = json.loads(response.data.decode('utf-8'))['access_token']
 
         # Dummy users
         self.admin1 = {
