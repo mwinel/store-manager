@@ -5,7 +5,9 @@ from app.main.auth import api
 from app.main.auth.users import (create_user, get_all_users, 
                                  get_user_by_username, check_user_password)
 from app.main.auth.models import User
+from app.validators import Validation
 
+validate = Validation()
 
 @api.route("/admin/signup", methods=['POST'])
 def register_admin():
@@ -14,15 +16,12 @@ def register_admin():
     email = request.json.get('email')
     password = request.json.get('password')
     admin = True
-    if username.strip() == "" or email.strip() == "" or password.strip() == "":
-        return jsonify({"message": "Fields cannot be left empty."}), 400
-    if not re.match("^[a-zA-Z0-9_.-]+$", username):
-        return jsonify({"message": "Username should not have spaces."}), 400
-    if len(password) <= 5:
-        return jsonify({"message": "Password too short."}), 400
+    validate_admin = validate.user_validation(username, email, password)
+    if validate_admin:
+        return jsonify({"message": validate_admin}), 400
     user_exists = get_user_by_username(username)
     if user_exists:
-        return jsonify({"message": "User already exists."}), 400
+        return jsonify({"message": "user already exists."}), 400
     return create_user(user_id, username, email, password, admin)
 
 
@@ -33,15 +32,12 @@ def register_attendant():
     email = request.json.get('email')
     password = request.json.get('password')
     admin = False
-    if username.strip() == "" or email.strip() == "" or password.strip() == "":
-        return jsonify({"message": "Fields cannot be left empty."}), 400
-    if not re.match("^[a-zA-Z0-9_.-]+$", username):
-        return jsonify({"message": "Username should not have spaces."}), 400
-    if len(password) <= 5:
-        return jsonify({"message": "Password too short."}), 400
+    validate_attendant = validate.user_validation(username, email, password)
+    if validate_attendant:
+        return jsonify({"message": validate_attendant}), 400
     user_exists = get_user_by_username(username)
     if user_exists:
-        return jsonify({"message": "User already exists."}), 400
+        return jsonify({"message": "user already exists."}), 400
     return create_user(user_id, username, email, password, admin)
 
 

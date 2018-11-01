@@ -3,8 +3,10 @@ from app.main.product import api
 from app.main.product.products import (create_product, get_product_by_name,
                                        get_all_products, update_a_product)
 from app.db import Database
+from app.validators import Validation
 
 db = Database()
+validate = Validation()
 
 @api.route("/products", methods=['POST'])
 def add_product():
@@ -12,12 +14,10 @@ def add_product():
     description = request.json.get('description')
     quantity = request.json.get('quantity')
     price = request.json.get('price')
-    # if admin is not True:
-    #     return jsonify({"message": "Unauthorized Access!"}), 401
-    if name.strip() == "" or description.strip() == "":
-        return jsonify({"message": "Fields cannot be left empty."}), 400
-    if price.strip() == "" or quantity.strip() == "":
-        return jsonify({"message": "Fields cannot be left empty."}), 400
+    
+    validate_product = validate(name, description, quantity, price)
+    if validate_product:
+        return jsonify({"message": validate_product}), 400
     already_exists = get_product_by_name(name)
     if already_exists:
         return jsonify({"message": "Product already exists."}), 400
@@ -35,10 +35,12 @@ def edit_product(product_id):
         description = request.json.get('description')
         quantity = request.json.get('quantity')
         price = request.json.get('price')
-        if name.strip() == "" or description.strip() == "":
-            return jsonify({"message": "Fields cannot be left empty."}), 400
-        if price.strip() == "" or quantity.strip() == "":
-            return jsonify({"message": "Fields cannot be left empty."}), 400
+        # if name.strip() == "" or description.strip() == "":
+        #     return jsonify({"message": "Fields cannot be left empty."}), 400
+        # if price.strip() == "" or quantity.strip() == "":
+        #     return jsonify({"message": "Fields cannot be left empty."}), 400
+
+        valida
         already_exists = get_product_by_name(name)
         if already_exists:
             return jsonify({"message": "Product already exists."}), 400
