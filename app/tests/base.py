@@ -1,4 +1,5 @@
 import unittest
+import json
 from manage import app
 from app.main.errors.request_errors import RequestError
 from app.main.auth.models import User
@@ -13,6 +14,13 @@ class BaseTestCase(unittest.TestCase):
         self.request_error = RequestError()
         self.admin = User("1", "nelson", "nelson@example.com", "123456", True)
         self.product = Product("Tecno W3", "Tecno smart phone", "2", "$150")
+        self.headers = {'Content-Type': 'application/json'}
+        response = self.app.post("/api/v1/auth/admin/login", headers=self.headers,
+                                 data=json.dumps({
+                                    "username": "sally",
+                                    "password": "123456"
+                                }))
+        self.access_token = json.loads(response.data)['access_token']
 
         # Dummy users
         self.admin1 = {

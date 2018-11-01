@@ -128,16 +128,13 @@ class TestAttendantAuth(BaseTestCase):
     def test_create_store_attendant(self):
         """Test API can signup new store attendant."""
         rv = self.app.post("/api/v1/auth/admin/signup",
-                           data=json.dumps(self.admin1),
-                           content_type='application/json')
+                           data=json.dumps(self.admin1), headers=self.headers)
         self.assertTrue(rv.status_code, 201)
         res = self.app.post("/api/v1/auth/admin/login",
-                            data=json.dumps(self.admin1),
-                            content_type='application/json')
+                            data=json.dumps(self.admin1), headers=self.headers)
         self.assertTrue(res.status_code, 200)
         rv = self.app.post("/api/v1/auth/signup",
-                           data=json.dumps(self.attendant1),
-                           content_type='application/json')
+                           data=json.dumps(self.attendant1), headers=self.headers)
         self.assertTrue(rv.status_code, 201)
         b"account successfully created." in rv.data
 
