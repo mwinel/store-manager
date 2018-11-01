@@ -21,4 +21,4 @@ CREATE TABLE IF NOT EXISTS sales (
     name VARCHAR(40),
     quantity INTEGER,
     cost INTEGER
-)
+);
