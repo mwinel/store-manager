@@ -4,6 +4,7 @@ from manage import app
 from app.main.errors.request_errors import RequestError
 from app.main.auth.models import User
 from app.main.product.models import Product
+from app.main.sale.models import Sale
 from app.db import Database
 
 
@@ -16,6 +17,7 @@ class BaseTestCase(unittest.TestCase):
         self.db = Database()
         self.admin = User("nelson", "nelson@example.com", "123456", True)
         self.product = Product("Tecno W3", "Tecno smart phone", "2", "$150")
+        self.sale = Sale("Tecno W3", "2", "299")
 
         self.admin1 = {
             "username": "admin",

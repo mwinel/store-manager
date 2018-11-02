@@ -5,7 +5,7 @@ class Sale:
     name, quantity and price.
     """
 
-    def __init__(self, name, quantity, cost):
+    def __init__(self, name, quantity, price):
         self.name = name
         self.quantity = quantity
-        self.cost = cost
+        self.price = price
