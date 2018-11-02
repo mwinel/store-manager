@@ -15,23 +15,8 @@ from app.db import Database
 validate = Validation()
 db = Database()
 
-@api.route("/admin/signup", methods=['POST'])
-def register_admin():
-    user_id = str(uuid.uuid4())
-    username = request.json.get('username')
-    email = request.json.get('email')
-    password = User.hash_password(request.json.get('password'))
-    admin = True
-    validate_admin = validate.user_validation(username, email, password)
-    if validate_admin:
-        return jsonify({"message": validate_admin}), 400
-    user_exists = get_user_by_username(username)
-    if user_exists:
-        return jsonify({"message": "user already exists."}), 400
-    return create_user(user_id, username, email, password, admin)
-
 @api.route("/signup", methods=['POST'])
-@jwt_required
+@jwt_required # pragma: no cover
 def register_attendant():
     admin = is_admin()
     if not admin:
