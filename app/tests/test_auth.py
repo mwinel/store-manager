@@ -58,13 +58,14 @@ class TestAttendantAuth(BaseTestCase):
     """This class tests the attendants auth endpoints."""
 
     def test_create_attendant(self):
-        login = dict(username="admin", password="admin")
-        res = self.app.post('/api/v1/auth/login', json=login)
-        token = json.loads(res.data)["access_token"]
+        # login = dict(username="admin", password="admin")
+        # res = self.app.post('/api/v1/auth/login', json=login)
+        # token = json.loads(str(res.data))["access_token"]
         signup = dict(username="lolo", email="lolo@example.com", password="123456", admin=False)
-        res = self.app.post('/api/v1/auth/signup', json=signup,
-                            headers={'Authorization': 'Bearer ' + token})
+        res = self.app.post('/api/v1/auth/signup', json=signup)
+                            # headers={'Authorization': 'Bearer ' + token})
         self.assertTrue(res.status_code, 201)
+        self.assertTrue(res, 'access_token')
         assert res.headers["Content-Type"] == "application/json"
 
     # def test_create_existing_store_attendant(self):
