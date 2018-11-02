@@ -16,7 +16,7 @@ validate = Validation()
 db = Database()
 
 @api.route("/signup", methods=['POST'])
-@jwt_required # pragma: no cover
+@jwt_required
 def register_attendant():
     admin = is_admin()
     if not admin:
