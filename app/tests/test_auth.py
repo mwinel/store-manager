@@ -60,7 +60,7 @@ class TestAttendantAuth(BaseTestCase):
     def test_create_attendant(self):
         login = dict(username="admin", password="admin")
         res = self.app.post('/api/v1/auth/login', json=login)
-        token = json.loads(res.data.decode('utf8'))["access_token"]
+        token = json.loads(res.data)["access_token"]
         signup = dict(username="lolo", email="lolo@example.com", password="123456", admin=False)
         res = self.app.post('/api/v1/auth/signup', json=signup,
                             headers={'Authorization': 'Bearer ' + token})
