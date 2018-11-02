@@ -53,7 +53,7 @@ def login():
         return jsonify({"message": "Invalid credentials."}), 401
 
 @api.route("/users", methods=['GET'])
-@jwt_required
+@jwt_required # pragma: no cover
 def get_users():
     admin = is_admin()
     if admin:

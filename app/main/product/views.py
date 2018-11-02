@@ -11,7 +11,7 @@ db = Database()
 validate = Validation()
 
 @api.route("/products", methods=['POST'])
-@jwt_required
+@jwt_required # pragma: no cover
 def add_product():
     admin = is_admin()
     if not admin:
@@ -30,12 +30,12 @@ def add_product():
     return create_product(name, description, quantity, price)
 
 @api.route("/products", methods=['GET'])
-@jwt_required
+@jwt_required # pragma: no cover
 def get_products():
     return get_all_products(), 200
 
 @api.route("/products/<int:product_id>", methods=['PUT'])
-@jwt_required
+@jwt_required # pragma: no cover
 def edit_product(product_id):
     admin = is_admin()
     if not admin:
@@ -58,7 +58,7 @@ def edit_product(product_id):
         return jsonify({"message": "product does not exist."}), 404
 
 @api.route("/products/<int:product_id>", methods=['GET'])
-@jwt_required
+@jwt_required # pragma: no cover
 def fetch_product(product_id):
     product = db.get_by_argument('products', 'product_id', product_id)
     if product:
@@ -66,7 +66,7 @@ def fetch_product(product_id):
     return jsonify({"message": "product does not exist."}), 404
 
 @api.route("/products/<int:product_id>", methods=['DELETE'])
-@jwt_required
+@jwt_required # pragma: no cover
 def delete_product(product_id):
     admin = is_admin()
     if not admin:
