@@ -4,6 +4,7 @@ from manage import app
 from app.main.errors.request_errors import RequestError
 from app.main.auth.models import User
 from app.main.product.models import Product
+from app.db import Database
 
 
 class BaseTestCase(unittest.TestCase):
@@ -12,68 +13,13 @@ class BaseTestCase(unittest.TestCase):
     def setUp(self):
         self.app = app.test_client()
         self.request_error = RequestError()
-        self.admin = User("1", "nelson", "nelson@example.com", "123456", True)
+        self.db = Database()
+        self.admin = User("nelson", "nelson@example.com", "123456", True)
         self.product = Product("Tecno W3", "Tecno smart phone", "2", "$150")
-        self.headers = {'Content-Type': 'application/json'}
-        response = self.app.post("/api/v1/auth/admin/signup", headers=self.headers,
-                                 data=json.dumps({
-                                    "username": "sally",
-                                    "email": "sally@example.com",
-                                    "password": "123456",
-                                    "admin": True
-                                }))
-        response = self.app.post("/api/v1/auth/admin/login", headers=self.headers,
-                                 data=json.dumps({
-                                    "username": "sally",
-                                    "password": "123456"
-                                }))
-        self.access_token = json.loads(response.data.decode('utf-8'))["access_token"]
 
-        # Dummy users
         self.admin1 = {
-            "username": "sally",
-            "email": "sally@example.com",
-            "password": "123456",
-            "admin": True
-        }
-
-        self.admin2 = {
-            "username": "john",
-            "email": "john@example.com",
-            "password": "123456",
-            "admin": True
-        }
-
-        self.admin3 = {
-            "username": "amy",
-            "email": "amy@example.com",
-            "password": "pis",
-            "admin": True
-        }
-
-        self.admin4 = {
-            "username": "am  y",
-            "email": "amy@example.com",
-            "password": "654321",
-            "admin": True
-        }
-
-        self.admin5 = {
-            "email": "amy@example.com",
-            "password": "654321",
-            "admin": True
-        }
-
-        self.admin6 = {
-            "username": "jonah",
-            "password": "654321",
-            "admin": True
-        }
-
-        self.admin7 = {
-            "username": "ruth",
-            "email": "amy@example.com",
-            "admin": True
+            "username": "admin",
+            "password": "admin"
         }
 
         self.attendant1 = {

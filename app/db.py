@@ -21,14 +21,13 @@ class Database:
 
     def insert_user_data(self, *args):
         """Insert user data into the database."""
-        user_id = args[0]
-        username = args[1]
-        email = args[2]
-        password = args[3]
-        admin = args[4]
-        user_query = "INSERT INTO users (user_id, username, email, password, admin)\
-        VALUES ('{}', '{}', '{}', '{}', '{}');".format(
-            user_id, username, email, password, admin)
+        username = args[0]
+        email = args[1]
+        password = args[2]
+        admin = args[3]
+        user_query = "INSERT INTO users (username, email, password, admin)\
+        VALUES ('{}', '{}', '{}', '{}');".format(
+            username, email, password, admin)
         self.cursor.execute(user_query)
 
     def insert_product(self, *args):
@@ -42,14 +41,20 @@ class Database:
                                                         price)
         self.cursor.execute(product_query)
 
-    def get_admin_status(self):
-        """Returns user whose admin status is True."""
-        query = "SELECT * FROM users WHERE admin = 't'"
+    def insert_sale(self, name, quantity, price):
+        """Add sale to the database."""
+        sale_query = "INSERT INTO sales (name, quantity, price)\
+                      VALUES ('{}', '{}', '{}');".format(name, quantity, price)
+        self.cursor.execute(sale_query)
+
+    def update_quantity(self, quantity, product_id):
+        """Update product quantity on sale."""
+        query = "UPDATE products SET quantity = '{}'\
+                 WHERE product_id = '{}'".format(quantity, product_id)
         self.cursor.execute(query)
-        admin = self.cursor.fetchone()
-        return admin
 
     def update_product(self, *args):
+        """Update product."""
         name = args[0]
         description = args[1]
         quantity = args[2]
@@ -88,6 +93,6 @@ class Database:
     def drop_tables(self):
         """Drops database tables."""
         query = "DROP TABLE IF EXISTS {0} CASCADE"
-        tables = ["users", "products", "sales"]
+        tables = ["users", "products", "sales", "complete"]
         for table in tables:
             self.cursor.execute(query.format(table))

@@ -23,9 +23,9 @@ def create_user(*args):
     email = args[2]
     password = args[3]
     admin = args[4]
-    user = User(user_id=user_id, username=username, email=email,
+    user = User(username=username, email=email,
                 password=password, admin=admin)
-    db.insert_user_data(user_id, username, email, password, admin)
+    db.insert_user_data(username, email, password, admin)
     return jsonify({
         "message": "account successfully created."
     }), 201
