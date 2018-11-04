@@ -60,8 +60,7 @@ class Database:
         quantity = args[2]
         price = args[3]
         query = "UPDATE products SET name = '{}', description = '{}',\
-                 quantity = '{}', price = '{}'".format(name, description,
-                                                       quantity, price)
+                 quantity = '{}', price = '{}'".format(name, description, quantity, price)
         self.cursor.execute(query)
         row = self.cursor.rowcount
         if int(row) > 0:
