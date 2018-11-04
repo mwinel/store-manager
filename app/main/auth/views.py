@@ -40,7 +40,6 @@ def login():
     username = request.json.get('username')
     password = request.json.get('password')
     current_user = get_user_by_username(username)
-    user_password = check_user_password(password)
     if not current_user:
         return jsonify({"message": "Invalid credentials."}), 401
     if pbkdf2_sha256.verify(password, pbkdf2_sha256.hash(password)):

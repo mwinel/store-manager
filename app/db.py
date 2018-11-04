@@ -25,10 +25,13 @@ class Database:
         email = args[1]
         password = args[2]
         admin = args[3]
-        user_query = "INSERT INTO users (username, email, password, admin)\
-                      VALUES ('{}', '{}', '{}', '{}');".format(username, email, 
-                                                               password, admin)
-        self.cursor.execute(user_query)
+        # user_query = "INSERT INTO users (username, email, password, admin)\
+        #               VALUES ('{}', '{}', '{}', '{}');".format(username, email, 
+        #                                                        password, admin)
+        self.cursor.execute("""INSERT INTO users (username, email, password, admin)
+            VALUES ('{}', '{}', '{}', '{}');""".format(
+                username, email, password, admin)
+        )
 
     def insert_product(self, *args):
         """Insert product data into the database."""
