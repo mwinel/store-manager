@@ -82,24 +82,23 @@ class Database:
 
     def get_all(self, table):
         """Return all rows from a table."""
-        query = "SELECT * FROM {};".format(table)
-        self.cursor.execute(query)
+        self.cursor.execute("""SELECT * FROM {};""".format(table))
         rows = self.cursor.fetchall()
         return rows
 
     def get_by_argument(self, table, column, argument):
         """Return a query by argument."""
-        query = "SELECT * FROM {} WHERE {} = '{}';".format(
-            table, column, argument)
-        self.cursor.execute(query)
+        self.cursor.execute(
+            """
+            SELECT * FROM {} WHERE {} = '{}';
+            """.format(table, column, argument))
         result = self.cursor.fetchone()
         return result
 
     def delete_by_argument(self, table, colum, argument):
         """Delete a record from the table"""
-        query = "DELETE FROM {} WHERE {} = '{}'".format(
-            table, colum, argument)
-        self.cursor.execute(query)
+        self.cursor.execute("DELETE FROM {} WHERE {} = '{}'".format(
+            table, colum, argument))
 
     def drop_tables(self):
         """Drops database tables."""
