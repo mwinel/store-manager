@@ -26,8 +26,8 @@ class Database:
         password = args[2]
         admin = args[3]
         user_query = "INSERT INTO users (username, email, password, admin)\
-                      VALUES ('{}', '{}', '{}', '{}');".format(
-                      username, email, password, admin)
+                      VALUES ('{}', '{}', '{}', '{}');".format(username, email, 
+                                                               password, admin)
         self.cursor.execute(user_query)
 
     def insert_product(self, *args):
