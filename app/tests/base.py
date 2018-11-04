@@ -1,7 +1,7 @@
 import unittest
 import json
 from manage import app
-from app.main.errors.request_errors import RequestError
+from app.errors import RequestError
 from app.main.auth.models import User
 from app.main.product.models import Product
 from app.main.sale.models import Sale
@@ -13,7 +13,7 @@ class BaseTestCase(unittest.TestCase):
 
     def setUp(self):
         self.app = app.test_client()
-        self.request_error = RequestError()
+        self.request_errors = RequestError()
         self.db = Database()
         self.admin = User("nelson", "nelson@example.com", "123456", True)
         self.product = Product("Tecno W3", "Tecno smart phone", "2", "$150")

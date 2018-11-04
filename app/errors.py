@@ -11,7 +11,7 @@ class RequestError:
         'error_message': "{0}, '{1}'"
     }
 
-    def not_found(error):
+    def not_found(self, error):
         """
         Returns a formatted 404 NOT FOUND error message.
         """
@@ -20,7 +20,7 @@ class RequestError:
             request.url
         )}), 404
 
-    def method_not_allowed(error):
+    def method_not_allowed(self, error):
         """
         Returns a formatted 405 METHOD NOT ALLOWED message.
         """
