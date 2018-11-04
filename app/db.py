@@ -25,12 +25,11 @@ class Database:
         email = args[1]
         password = args[2]
         admin = args[3]
-        # user_query = "INSERT INTO users (username, email, password, admin)\
-        #               VALUES ('{}', '{}', '{}', '{}');".format(username, email, 
-        #                                                        password, admin)
-        self.cursor.execute("""INSERT INTO users (username, email, password, admin)
-            VALUES ('{}', '{}', '{}', '{}');""".format(
-                username, email, password, admin)
+        self.cursor.execute(
+            """
+            INSERT INTO users (username, email, password, admin)
+            VALUES ('{}', '{}', '{}', '{}');
+            """.format(username, email, password, admin)
         )
 
     def insert_product(self, *args):
@@ -39,22 +38,30 @@ class Database:
         description = args[1]
         quantity = args[2]
         price = args[3]
-        product_query = "INSERT INTO products (name, description, quantity,\
-                         price) VALUES ('{}', '{}', '{}', '{}');".format(
-                         name, description, quantity, price)
-        self.cursor.execute(product_query)
+        self.cursor.execute(
+            """
+            INSERT INTO products (name, description, quantity, price) 
+            VALUES ('{}', '{}', '{}', '{}');
+            """.format(name, description, quantity, price)
+        )
 
     def insert_sale(self, name, quantity, price):
         """Add sale to the database."""
-        sale_query = "INSERT INTO sales (name, quantity, price)\
-                      VALUES ('{}', '{}', '{}');".format(name, quantity, price)
-        self.cursor.execute(sale_query)
+        self.cursor.execute(
+            """
+            INSERT INTO sales (name, quantity, price)
+            VALUES ('{}', '{}', '{}');
+            """.format(name, quantity, price)
+        )
 
     def update_quantity(self, quantity, product_id):
         """Update product quantity on sale."""
-        query = "UPDATE products SET quantity = '{}'\
-                 WHERE product_id = '{}'".format(quantity, product_id)
-        self.cursor.execute(query)
+        self.cursor.execute(
+            """
+            UPDATE products SET quantity = '{}'
+            WHERE product_id = '{}'
+            """.format(quantity, product_id)
+        )
 
     def update_product(self, *args):
         """Update product."""
@@ -62,9 +69,11 @@ class Database:
         description = args[1]
         quantity = args[2]
         price = args[3]
-        query = "UPDATE products SET name = '{}', description = '{}',\
-                 quantity = '{}', price = '{}'".format(name, description, quantity, price)
-        self.cursor.execute(query)
+        self.cursor.execute(
+            """
+            UPDATE products SET name = '{}', description = '{}',
+            quantity = '{}', price = '{}'
+            """.format(name, description, quantity, price))
         row = self.cursor.rowcount
         if int(row) > 0:
             return True
