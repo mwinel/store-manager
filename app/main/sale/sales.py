@@ -1,31 +1,20 @@
 from flask import jsonify
-from app.models import Sale
-from app.db import sales
+from app.main.sale.models import Sale
+from app.db import Database
 
+db = Database()
 
-def create_sales(name, quantity, price):
+def create_sale(product_id, sale_quantity, price):
     """
-    Method to create a new sale.
+    Creates a new sale.
     """
-    sale_order = Sale(name=name, quantity=quantity, price=price)
-    sales.append(sale_order)
-    return jsonify({
-        "message": "Sale order successfully added."
-    }), 201
-
+    sale = Sale(product_id=product_id, sale_quantity=sale_quantity, price=price)
+    db.insert_sale(product_id, sale_quantity, price)
+    return jsonify({"message": "sale successfully added."}), 201
 
 def get_all_sales():
     """
-    This method returns a list of sales.
+    This method returns a list of all sales.
     """
-    return jsonify(Sales=[i.serialize for i in sales])
-
-
-def get_sale_by_id(id):
-    """
-    Checks for a sale order given its id.
-    """
-    sale = [sale.serialize for sale in sales if sale.id == id]
-    if not sale:
-        return jsonify({"message": "Sale order does not exist."}), 404
-    return jsonify(Sale=sale), 200
+    sales = db.get_all('sales')
+    return jsonify(Sales=sales)

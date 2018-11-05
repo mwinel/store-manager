@@ -1,46 +1,44 @@
 from flask import jsonify
-from app.models import Product
-from app.db import products
+from app.main.product.models import Product
+from app.db import Database
 
+db = Database()
 
-def create_product(name, description, quantity, price, category):
+def create_product(name, description, quantity, price):
     """
-    This method creates a new product.
-    parameters: name, description, quantity, price, category.
-    returns: a success message.
+    Creates a new product.
     """
     product = Product(name=name, description=description, quantity=quantity,
-                      price=price, category=category)
-    products.append(product)
-    return jsonify({
-        "message": "Product successfully added."
-    }), 201
+                      price=price)
+    db.insert_product(name, description, quantity, price)
+    return jsonify({"message": "product successfully added."}), 201
 
+def update_a_product(name, description, quantity, price):
+    """
+    Updates a product.
+    """
+    product = Product(name=name, description=description, quantity=quantity,
+                      price=price)
+    db.update_product(name, description, quantity, price)
+    return jsonify({"message": "product successfully updated."}), 201
 
 def get_all_products():
     """
     This method returns a list of all products.
     """
-    return jsonify(Products=[i.serialize for i in products])
-
+    products = db.get_all('products')
+    return jsonify(Products=products)
 
 def get_product_by_name(name):
     """
-    This method checks for a product given its title.
-    parameters: title
-    returns: True
+    Get product given its name.
     """
-    for product in products:
-        if product.name == name:
-            return True
+    product = db.get_by_argument('products', 'name', name)
+    return product
 
-
-def get_product_by_id(id):
+def get_product_by_id(product_id):
     """
-    This method checks for a product given its id.
-    returns: product
+    Get product given its id.
     """
-    product = [product.serialize for product in products if product.id == id]
-    if not product:
-        return jsonify({"message": "Product does not exist."}), 404
-    return jsonify(Product=product), 200
+    product = db.get_by_argument('products', 'product_id', product_id)
+    return product

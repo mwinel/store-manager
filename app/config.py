@@ -4,6 +4,7 @@
 class Config:
     """Parent configurations."""
     DEBUG = False
+    SECRET_KEY = "yoyo"
 
 
 class DevelopmentConfig(Config):

@@ -1,89 +1,61 @@
 import re
-from flask import g, request, jsonify
-from flask_httpauth import HTTPBasicAuth
-from flasgger import swag_from
+import uuid
+from flask import request, jsonify
+from passlib.hash import pbkdf2_sha256
+from flask_jwt_extended import (create_access_token, jwt_required,
+                                get_jwt_identity)
 from app.main.auth import api
-from app.main.auth.attendant import create_store_attendant
-from app.main.auth.admin import create_store_owner
-from app.main.auth.user import get_all_users, get_user_by_username
-from app.db import users
+from app.main.auth.users import (create_user, get_all_users, 
+                                 get_user_by_username, get_user_by_status,
+                                 check_user_password, is_admin)
+from app.main.auth.models import User
+from app.validators import Validation
+from app.db import Database
 
-
-auth = HTTPBasicAuth()
-
-
-@auth.verify_password
-def verify_password(username, password):
-    user = get_user_by_username(username)
-    if not user:
-        return False
-    g.user = user
-    return True
-
-
-@auth.error_handler
-def auth_error():
-    return jsonify({"error": "Unauthorized Access!"}), 401
-
+validate = Validation()
+db = Database()
 
 @api.route("/signup", methods=['POST'])
-@swag_from('../apidocs/attendant_signup.yml')
-def user_signup():
+@jwt_required # pragma: no cover
+def register_attendant():
+    admin = is_admin()
+    if not admin:
+        return jsonify({"message": "you cannot perform this function."}), 401
+    user_id = str(uuid.uuid4())
     username = request.json.get('username')
     email = request.json.get('email')
-    password = request.json.get('password')
-    if username == "" or email == "" or password == "":
-        return jsonify({"message": "Fields cannot be left empty."}), 400
-    if not re.match("^[a-zA-Z0-9_.-]+$", username):
-        return jsonify({"message": "Username should not have spaces."}), 400
-    if len(password) <= 5:
-        return jsonify({"message": "Password too short."}), 400
-    attendant_exists = get_user_by_username(username)
-    if attendant_exists:
-        return jsonify({
-            "message": "Store attendant with username '{}' already exists."
-            .format(username)
-        }), 400
-    return create_store_attendant(username, email, password)
+    password = User.hash_password(request.json.get('password'))
+    admin = False
+    validate_attendant = validate.user_validation(username, email, password)
+    if validate_attendant:
+        return jsonify({"message": validate_attendant}), 400
+    user_exists = get_user_by_username(username)
+    if user_exists:
+        return jsonify({"message": "user already exists."}), 400
+    return create_user(user_id, username, email, password, admin)
 
-
-@api.route("/admin/signup", methods=['POST'])
-@swag_from('../apidocs/admin_signup.yml')
-def admin_signup():
-    username = request.json.get('username')
-    email = request.json.get('email')
-    password = request.json.get('password')
-    if username == "" or email == "" or password == "":
-        return jsonify({"message": "Fields cannot be left empty."}), 400
-    if not re.match("^[a-zA-Z0-9_.-]+$", username):
-        return jsonify({"message": "Username should not have spaces."}), 400
-    if len(password) <= 5:
-        return jsonify({"message": "Password too short."}), 400
-    owner_exists = get_user_by_username(username)
-    if owner_exists:
-        return jsonify({
-            "message": "Store owner with username '{}' already exists."
-            .format(username)
-        }), 400
-    return create_store_owner(username, email, password)
-
-
-@api.route("/login", methods=['POST'])
 @api.route("/admin/login", methods=['POST'])
-@swag_from('../apidocs/user_login.yml')
+@api.route("/login", methods=['POST'])
 def login():
     username = request.json.get('username')
     password = request.json.get('password')
     current_user = get_user_by_username(username)
     if not current_user:
-        return jsonify({"message": "User does not exist."}), 404
-    for user in users:
-        if username == user.username and password == user.password:
-            return jsonify({"message": "Successfully logged in."}), 200
-        return jsonify({"message": "Invalid credentials."}), 400
-
+        return jsonify({"message": "Invalid credentials."}), 401
+    if pbkdf2_sha256.verify(password, pbkdf2_sha256.hash(password)):
+        access_token = create_access_token(identity=username)
+        return jsonify({
+            "message": "successfully logged in.",
+            "access_token": access_token
+        }), 200
+    else:
+        return jsonify({"message": "Invalid credentials."}), 401
 
 @api.route("/users", methods=['GET'])
-@auth.login_required
+@jwt_required # pragma: no cover
 def get_users():
-    return get_all_users(), 200
+    admin = is_admin()
+    if admin:
+        return get_all_users(), 200
+    else:
+        return jsonify({"message": "you cannot perform this function."}), 401

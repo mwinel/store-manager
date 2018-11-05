@@ -1,41 +1,34 @@
+import datetime
 from flask import jsonify, request
-from flasgger import swag_from
+from flask_jwt_extended import jwt_required
 from app.main.sale import api
-from app.main.sale.sales import (create_sales, get_all_sales,
-                                 get_sale_by_id)
-from app.main.auth.views import auth
-from app.main.auth.admin import is_admin
-from app.db import products
+from app.main.sale.sales import create_sale, get_all_sales
+from app.main.product.products import get_product_by_id
+from app.db import Database
 
+db = Database()
 
 @api.route("/sales", methods=['POST'])
-@auth.login_required
-@swag_from('../apidocs/add_sale.yml')
+@jwt_required # pragma: no cover
 def add_sale():
-    name = request.json.get('name')
-    quantity = int(request.json.get('quantity'))
-    price = int(request.json.get('price'))
-    if name == "":
-        return jsonify({"message": "Fields cannot be left empty."}), 400
-    product = [i for i in products if i.name == name]
-    if not product:
-        return jsonify({"message": "Product does not exist."}), 404
-    return create_sales(name, quantity, price)
-
+    product_id = request.json.get("product_id")
+    sale_quantity = request.json.get("sale_quantity")
+    price = request.json.get("price")
+    sale_date = datetime.datetime.now()
+    if product_id <= 0 or sale_quantity <= 0:
+        return jsonify({"message": "invalid input."}), 400
+    product = get_product_by_id(product_id)
+    inventory = product['quantity']
+    if sale_quantity > inventory:
+        return jsonify({"message": "not enough items in stock."}), 400
+    if product:
+        new_inventory = inventory - sale_quantity
+        db.update_quantity(new_inventory, product_id)
+        return create_sale(product_id, sale_quantity, price)
+    else:
+        return jsonify({"message": "product does not exist."}), 404
 
 @api.route("/sales", methods=['GET'])
-@auth.login_required
-@swag_from('../apidocs/get_sales.yml')
-def get_sale_orders():
-    if is_admin() is not True:
-        return jsonify({"message": "Unauthorized Access!"}), 401
+@jwt_required # pragma: no cover
+def get_sales():
     return get_all_sales(), 200
-
-
-@api.route("/sales/<int:id>", methods=['GET'])
-@auth.login_required
-@swag_from('../apidocs/get_sale.yml')
-def get_sale(id):
-    if is_admin() is not True:
-        return jsonify({"message": "Unauthorized Access!"}), 401
-    return get_sale_by_id(id)

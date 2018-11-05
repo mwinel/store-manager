@@ -1,15 +1,11 @@
-# Add coverage configurations
-[report]
-
-# Exclude from consideration
-exclude_lines = 
-    pragma: no cover
-
-    # Don't complain if tests do not hit defensive assertion code:
-    raise AssertionError
-    raise NotImplementError
-    raise IndexError
-
-    # Don't complain if non runnable code is not run:
-    if 0:
-    if __name__ == __main__.:
+[run]
+omit =
+    # omit anything in a .local directory anywhere
+    */.local/*
+    # omit everything in /usr
+    /usr/*
+    # omit this single file
+    app/db.py
+    app/schema.sql
+    app/main/auth/users.py
+    app/main/product/products.py

@@ -1,7 +1,11 @@
 import unittest
+import json
 from manage import app
-from app.main.errors.request_errors import RequestError
-from app.models import User, Owner, Product, Sale
+from app.errors import RequestError
+from app.main.auth.models import User
+from app.main.product.models import Product
+from app.main.sale.models import Sale
+from app.db import Database
 
 
 class BaseTestCase(unittest.TestCase):
@@ -9,49 +13,54 @@ class BaseTestCase(unittest.TestCase):
 
     def setUp(self):
         self.app = app.test_client()
-        self.request_error = RequestError()
-        self.attendant = User("nelson", "nelson@example.com", "123456")
-        self.owner = Owner("murungi", "murungi@example.com", "654321")
-        self.product = Product("Tecno W3", "Tecno smart phone", "2", "$150",
-                               "Mobile Phones")
-        self.sale = Sale("Sony LED TV", "2", "299")
+        self.request_errors = RequestError()
+        self.db = Database()
+        self.admin = User("nelson", "nelson@example.com", "123456", True)
+        self.product = Product("Tecno W3", "Tecno smart phone", "2", "$150")
+        self.sale = Sale("Tecno W3", "2", "299")
 
-        # Dummy attendants
+        self.admin1 = {
+            "username": "admin",
+            "password": "admin"
+        }
+
         self.attendant1 = {
-            "username": "sally",
-            "email": "sally@example.com",
-            "password": "123456"
+            "username": "amy",
+            "email": "amy@example.com",
+            "password": "123456",
+            "admin": False
         }
 
         self.attendant2 = {
-            "username": " ",
-            "email": "sally@example.com",
-            "password": "123456"
+            "username": "lisa",
+            "email": "lisa@example.com",
+            "password": "123456",
+            "admin": False
         }
 
         self.attendant3 = {
-            "username": "sally",
-            "email": "sally@example.com",
-            "password": "1234"
+            "username": "susan",
+            "email": "susan@example.com",
+            "password": "pis",
+            "admin": False
         }
 
-        # Dummy owners
-        self.owner1 = {
-            "username": "paul",
-            "email": "paul@example.com",
-            "password": "123456"
+        self.attendant4 = {
+            "email": "susan@example.com",
+            "password": "123456",
+            "admin": False
         }
 
-        self.owner2 = {
-            "username": " ",
-            "email": "paul@example.com",
-            "password": "123456"
+        self.attendant5 = {
+            "username": "susan",
+            "password": "123456",
+            "admin": False
         }
 
-        self.owner3 = {
-            "username": "john",
-            "email": "john@example.com",
-            "password": "1234"
+        self.attendant3 = {
+            "username": "susan",
+            "email": "susan@example.com",
+            "admin": False
         }
 
         # Dummy products
@@ -59,30 +68,49 @@ class BaseTestCase(unittest.TestCase):
             "name": "Tecno W3",
             "description": "Mobile Smart Phone",
             "quantity": "3",
-            "price": "$200",
-            "category": "Mobile Phones"
+            "price": "200"
         }
 
         self.product2 = {
             "name": " ",
             "description": "LCD 32 inch television",
             "quantity": "3",
-            "price": "$600",
-            "category": "Televisions"
+            "price": "600"
         }
 
-        # Dummy sales
-        self.sale1 = {
-            "name": "Tecno W3",
-            "quantity": "1",
-            "price": "299"
-        }
-
-        self.sale2 = {
+        self.product3 = {
             "name": " ",
-            "quantity": "1",
-            "price": "299"
+            "description": "LCD 32 inch television",
+            "quantity": "3",
+            "price": " "
         }
+
+        self.product4 = {}
+
+        self.product5 = {
+            "description": "LCD 32 inch television",
+            "quantity": "3",
+            "price": " "
+        }
+
+        self.product6 = {
+            "name": "Soap",
+            "quantity": "3",
+            "price": " "
+        }
+
+        self.product7 = {
+            "name": "Salt",
+            "description": "LCD 32 inch television",
+            "price": "100"
+        }
+
+        self.product8 = {
+            "name": "Ball",
+            "description": "LCD 32 inch television",
+            "quantity": "3",
+        }
+
 
     def tearDown(self):
         pass

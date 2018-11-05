@@ -1,42 +1,78 @@
 from flask import jsonify, request
-from flasgger import swag_from
+from flask_jwt_extended import jwt_required
 from app.main.product import api
 from app.main.product.products import (create_product, get_product_by_name,
-                                       get_all_products, get_product_by_id)
-from app.main.auth.admin import is_admin
-from app.main.auth.views import auth
+                                       get_all_products, update_a_product)
+from app.main.auth.users import is_admin
+from app.db import Database
+from app.validators import Validation
 
+db = Database()
+validate = Validation()
 
 @api.route("/products", methods=['POST'])
-@auth.login_required
-@swag_from('../apidocs/add_product.yml')
+@jwt_required # pragma: no cover
 def add_product():
+    admin = is_admin()
+    if not admin:
+        return jsonify({"message": "you cannot perform this function."}), 401
     name = request.json.get('name')
     description = request.json.get('description')
-    quantity = request.json.get('quantity')
-    price = request.json.get('price')
-    category = request.json.get('category')
-    if is_admin() is not True:
-        return jsonify({"message": "Unauthorized Access!"}), 401
-    if name == "" or description == "" or quantity == "":
-        return jsonify({"message": "Fields cannot be left empty."}), 400
-    if price == "" or quantity == "":
-        return jsonify({"message": "Fields cannot be left empty."}), 400
+    quantity = int(request.json.get('quantity'))
+    price = int(request.json.get('price'))
+    validate_product = validate.product_validation(name, description,
+                                                   quantity, price)
+    if validate_product:
+        return jsonify({"message": validate_product}), 400
     already_exists = get_product_by_name(name)
     if already_exists:
         return jsonify({"message": "Product already exists."}), 400
-    return create_product(name, description, quantity, price, category)
-
+    return create_product(name, description, quantity, price)
 
 @api.route("/products", methods=['GET'])
-@auth.login_required
-@swag_from('../apidocs/get_products.yml')
+@jwt_required # pragma: no cover
 def get_products():
     return get_all_products(), 200
 
+@api.route("/products/<int:product_id>", methods=['PUT'])
+@jwt_required # pragma: no cover
+def edit_product(product_id):
+    admin = is_admin()
+    if not admin:
+        return jsonify({"message": "you cannot perform this function."}), 401
+    product = db.get_by_argument('products', 'product_id', product_id)
+    if product:
+        name = request.json.get('name')
+        description = request.json.get('description')
+        quantity = request.json.get('quantity')
+        price = request.json.get('price')
+        validate_update = validate.product_validation(name, description,
+                                                      quantity, price)
+        if validate_update:
+            return jsonify({"message": validate_update}), 400
+        already_exists = get_product_by_name(name)
+        if already_exists:
+            return jsonify({"message": "Product already exists."}), 400
+        return update_a_product(name, description, quantity, price)
+    else:
+        return jsonify({"message": "product does not exist."}), 404
 
-@api.route("/products/<int:id>", methods=['GET'])
-@auth.login_required
-@swag_from('../apidocs/get_product.yml')
-def get_product(id):
-    return get_product_by_id(id)
+@api.route("/products/<int:product_id>", methods=['GET'])
+@jwt_required # pragma: no cover
+def fetch_product(product_id):
+    product = db.get_by_argument('products', 'product_id', product_id)
+    if product:
+        return jsonify(Product=product), 200
+    return jsonify({"message": "product does not exist."}), 404
+
+@api.route("/products/<int:product_id>", methods=['DELETE'])
+@jwt_required # pragma: no cover
+def delete_product(product_id):
+    admin = is_admin()
+    if not admin:
+        return jsonify({"message": "you cannot perform this function."}), 401
+    product = db.get_by_argument('products', 'product_id', product_id)
+    if not product:
+        return jsonify({"message": "product does not exist."}), 404
+    db.delete_by_argument('products', 'product_id', product_id)
+    return jsonify({"message": "product successfully deleted."}), 200

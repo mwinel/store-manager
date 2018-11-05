@@ -1,8 +1,10 @@
 from flask import Flask
 from flasgger import Swagger, swag_from
+from flask_jwt_extended import JWTManager
 from app.config import app_config
-from app.main.errors.request_errors import RequestError
+from app.errors import RequestError
 
+request_errors = RequestError()
 
 def create_app(config_class):
     """
@@ -15,12 +17,14 @@ def create_app(config_class):
         'title': 'Store Manager API',
         'universion': 3
     }
-
     swagger = Swagger(app)
+    app.config['SECRET_KEY'] = "yoyo"
+    app.config['JWT_SECRET_KEY'] = "neverrunwithme"
+    jwt = JWTManager(app)
 
     # Request Exceptions
-    app.errorhandler(404)(RequestError.not_found)
-    app.errorhandler(405)(RequestError.method_not_allowed)
+    app.errorhandler(404)(request_errors.not_found)
+    app.errorhandler(405)(request_errors.method_not_allowed)
 
     # Register blueprints
     from app.main.index import api as index_blueprint
@@ -30,9 +34,9 @@ def create_app(config_class):
     app.register_blueprint(auth_blueprint, url_prefix='/api/v1/auth')
 
     from app.main.product import api as product_blueprint
-    app.register_blueprint(product_blueprint, url_prefix='/api/v1')
+    app.register_blueprint(product_blueprint, url_prefix='/api/v1/')
 
-    from app.main.sale import api as sales_blueprint
-    app.register_blueprint(sales_blueprint, url_prefix='/api/v1')
+    from app.main.sale import api as sale_blueprint
+    app.register_blueprint(sale_blueprint, url_prefix='/api/v1/')
 
     return app
