@@ -12,7 +12,6 @@ def create_sale(product_id, sale_quantity, price):
     db.insert_sale(product_id, sale_quantity, price)
     return jsonify({"message": "sale successfully added."}), 201
 
-
 def get_all_sales():
     """
     This method returns a list of all sales.
