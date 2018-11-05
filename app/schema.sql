@@ -21,10 +21,11 @@ CREATE TABLE IF NOT EXISTS products (
 
 CREATE TABLE IF NOT EXISTS sales (
     sale_id SERIAL PRIMARY KEY,
-    name VARCHAR(40),
-    quantity INTEGER,
+    product_id INTEGER REFERENCES products(product_id) 
+    ON DELETE CASCADE,
+    sale_quantity INTEGER,
     price INTEGER,
-    date TIMESTAMPTZ,
+    sale_date TIMESTAMPTZ,
     user_id INTEGER,
     FOREIGN KEY (user_id) REFERENCES users (user_id) 
     ON UPDATE CASCADE ON DELETE CASCADE

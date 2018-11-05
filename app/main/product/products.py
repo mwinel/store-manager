@@ -35,3 +35,10 @@ def get_product_by_name(name):
     """
     product = db.get_by_argument('products', 'name', name)
     return product
+
+def get_product_by_id(product_id):
+    """
+    Get product given its id.
+    """
+    product = db.get_by_argument('products', 'product_id', product_id)
+    return product

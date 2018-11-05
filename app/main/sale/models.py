@@ -5,7 +5,7 @@ class Sale:
     name, quantity and price.
     """
 
-    def __init__(self, name, quantity, price):
-        self.name = name
-        self.quantity = quantity
+    def __init__(self, product_id, sale_quantity, price):
+        self.product_id = product_id
+        self.sale_quantity = sale_quantity
         self.price = price
